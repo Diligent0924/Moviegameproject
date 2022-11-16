@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('articles.urls')),
+    path('moviecards/', include('moviecards.urls')),
     path('accounts/', include('dj_rest_auth.urls')), # 로그인 기능
     path('accounts/signup/', include('dj_rest_auth.registration.urls')), # 로그인/회원가입 기능 활성화
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
