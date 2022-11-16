@@ -1,22 +1,66 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import LoginView from '@/views/LoginView'
+import SignUpView from '@/views/SignUpView'
+import InvenView from '@/views/InvenView'
+import ScoreBoardView from '@/views/ScoreBoardView'
+import NotFound404 from '@/views/NotFound404'
+import GamePageView from '@/views/GamePageView'
+import FirstDeckView from '@/views/FirstDeckView'
+import PlayingAreaView from '@/views/PlayingAreaView'
+import CoinAreaView from '@/views/CoinAreaView'
+
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'login',
+    component: LoginView,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/signup',
+    name: 'signup',
+    component: SignUpView,
+  },
+  {
+    path: '/scoreboard',
+    name:'scoreboard',
+    component: ScoreBoardView,
+  },
+  {
+    path: '/inven',
+    name: 'inven',
+    component: InvenView,
+  },
+  {
+    path: '/game',
+    name: 'game',
+    component: GamePageView,
+    children: [
+      {
+        path: 'start',
+        name:'scoreboard',
+        component: FirstDeckView,
+      },
+      {
+        path: 'playing',
+        name:'playing',
+        component: PlayingAreaView
+      },
+      {
+        path: 'coin',
+        name:'coin',
+        component: CoinAreaView
+      }
+    ]
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFound404,
   }
 ]
 
