@@ -9,6 +9,7 @@ import GamePageView from '@/views/GamePageView'
 import FirstDeckView from '@/views/FirstDeckView'
 import PlayingAreaView from '@/views/PlayingAreaView'
 import CoinAreaView from '@/views/CoinAreaView'
+import ScoreDetailView from '@/views/ScoreDetailView'
 
 
 
@@ -42,7 +43,7 @@ const routes = [
     children: [
       {
         path: 'start',
-        name:'scoreboard',
+        name:'start',
         component: FirstDeckView,
       },
       {
@@ -56,6 +57,11 @@ const routes = [
         component: CoinAreaView
       }
     ]
+  },
+  {
+    path: '/scoreboard/detail',
+    name: 'scoreboard-detail',
+    component: ScoreDetailView,
   },
   {
     path: '*',
