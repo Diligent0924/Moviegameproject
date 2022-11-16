@@ -182,7 +182,7 @@ docs/_book
 # TODO: where does this rule come from?
 test/
 
-### Vuejs ###
+### Vuejs ### 
 # Recommended template: Node.gitignore
 
 node_modules/
