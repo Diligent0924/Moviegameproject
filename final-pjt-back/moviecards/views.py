@@ -69,7 +69,7 @@ def bosscard_list(request): # 보스 카드를 더한다.
         {"id":767,"name": '헤드위그', "poster_path":'', "AD": 8, "HP": 100, "skill_type":['alldeal','heal'], "skill_range":[50,-100], "skill_comment":["부엉부엉","엉부엉부"]},
         {"id":12445,"name": '마법의 모자', "poster_path":'', "AD": 0, "HP": 1000, "skill_type":["others","others"], "skill_range":[0,0], "skill_comment":["구리퓐도르!","임페리오"]}]
         harry_list = [671,672,673,674,675,767,12445]
-        for i in range(7):
+        for i in range(7): 
             if boss_info[i]['id'] not in harry_list:
                 continue
             # Card Table에 추가
