@@ -1,55 +1,76 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+  <div id="app">
+    <nav class="navbar navbar-light justify-content-between mb-5" style="background-color: #e3f2fd;">
+      <div>
+        <router-link :to="{ name: 'inven' }" class="router-link-class">
+          <img thumbnail rounded fluid src="./assets/SSasstone.png" alt="#" style="width: 50px; height: 50px;">
+        </router-link>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <b-button variant="success" v-if="isLogined" @click="logOut">로그 아웃</b-button>
       </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+      <div>
+        <div class="my-2 mx-3">
+          <span class="mx-2">
+            <router-link :to="{ name: 'login' }" class="router-link-class" v-if="!isLogined">로그인</router-link> 
+          </span>
+          <span class="mx-2">
+            <router-link :to="{ name: 'signup' }" class="router-link-class" v-if="!isLogined">회원가입</router-link> 
+          </span>
+          <span class="mx-2">
+            <router-link :to="{ name: 'scoreboard' }" class="router-link-class">랭킹</router-link>
+          </span>
+          <span class="mx-2">
+            <router-link :to="{ name: 'inven' }" class="router-link-class">인벤</router-link>
+          </span>
+        </div>
+      </div>
+    </nav>
+    <router-view/>
+  </div>
 </template>
-
 <script>
 
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
-};
+  computed: {
+    isLogined() {
+      if (this.$store.state.token) {
+        return true;
+      } else {
+        return false; 
+      }
+    }
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch('logout');
+    }
+  }
+}
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+.router-link-class {
+  font-size: x-large;
+}
+</style>
