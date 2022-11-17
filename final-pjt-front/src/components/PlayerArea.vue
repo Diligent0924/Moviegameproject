@@ -1,11 +1,12 @@
 <template>
   <div>
     <div style="display: flex; justify-content: center;">
-      <CardItem/>
-      <CardItem/>
-      <CardItem/>
-      <CardItem/>
-      <CardItem/>
+      <PlayerCardItem
+        v-for="(card, index) in cards"
+        :key="`${index}-${card}inplayerarea`"
+        :card=card
+      />
+
     </div>
     <h3>
       플레이어 공간
@@ -14,13 +15,18 @@
 </template>
 
 <script>
-import CardItem from '@/components/CardItem'
+import PlayerCardItem from '@/components/PlayerCardItem'
 
 export default {
   name: 'PlayingArea',
   components: {
-    CardItem
+    PlayerCardItem
   },
+  data() {
+    return {
+      cards: ['card1', 'card2', 'card3', 'card4', 'card5']
+    }
+  }
 }
 </script>
 

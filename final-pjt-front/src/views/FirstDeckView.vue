@@ -1,16 +1,18 @@
 <template>
   <div>
     <h2>
-      처음 시작 덱 만드는 페이지
+      최초 덱 구성 페이지
     </h2>
     <hr>
-    <div style="float: left; margin-left: 300px;">
-      <CardPack/>
+    <div style="float: left; margin-left: 100px;">
+      <CardPack @count-up="countUpdate" />
     </div>
-    <div style="float: right; margin-right: 400px;">
+    <div style="float: right; margin-right: 350px;">
       <MyDeck/>
     </div>
-    <button class="downsides" @click="goToDengeon">탐험 시작!</button>
+    <div>
+      <b-button :class="{disabled : count < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
+    </div>
   </div>
 </template>
 
@@ -29,14 +31,23 @@ export default {
       this.$router.push({
         name: 'playing'
       })
+    },
+    countUpdate (newCount) {
+      this.count = newCount
     }
-  }
+  },
+  data() {
+    return {
+      count: 0
+    }
+  },
+
+
 }
 </script>
 
 <style>
-  .downsides {
-    position: fixed;
-    bottom: 60px;
+  .downside {
+    margin-top: 10px; 
   }
 </style>
