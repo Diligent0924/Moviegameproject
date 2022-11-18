@@ -33,7 +33,7 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
         return Response(serializer.data)
     elif request.method == 'POST':
         # 여기서 기존 DB 전체 삭제
-        data = Card.objects.all()
+        data = Card.objects.raw('select * from moviecards_card where movietype != "boss"')
         for i in data:
             Card.delete(i)
         # 해리포터 id 리스트
