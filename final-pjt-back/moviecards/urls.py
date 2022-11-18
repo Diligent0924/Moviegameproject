@@ -3,15 +3,17 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.cards_list), # 전체 카드 리스트를 전부 보여주자.
-    # Card들을 더하는 URL
+    # 전체 Card들을 저장
+    path('', views.cards_list),
+    # Cards => GET : 카드더미 확인, POST : 카드더미 추가
     path('normalcard_list/', views.normalcard_list),
-    # path('uniquecard_list/', views.uniquecard_list),
+    path('uniquecard_list/', views.uniquecard_list),
     path('bosscard_list/', views.bosscard_list),
     path('skill_list/', views.skill_list),
-    # path('bosscard_list/<int:bosscard_pk>/', views.bosscard_detail),
+    
+    # 개별적인 Card들을 확인
+    path('<int:card_pk>/', views.card_detail),
 
     # 추가적인 기능 활동
-    # path('firstdeck/', views.firstdeck),
-    # path('plus/', views.plus)
+    path('plus/', views.plus)
 ]
