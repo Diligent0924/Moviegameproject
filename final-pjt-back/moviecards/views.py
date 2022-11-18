@@ -131,19 +131,16 @@ def card_detail(request, card_pk):
         serializer = normaldetailSerializer(card, many=True) # 이부분 그냥 일부분만 serialize가 가능할거같은데 나중에 하자!
         return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['GET']) # POST로 변경 필요
 def plus(request):
     # Normal Card하고 Unique 카드 비율을 어떻게 산정할 것인지에 대한 논의가 필요함...
-    card_list = get_list_or_404(Card)
-    three_card = random.sample(card_list, 3) # 랜덤으로 3개를 뽑아낸다.
-    three_card_id = []
-    for c in three_card:
-        three_card_id.append(c.movieid)
-    print(three_card_id)
-    final_three = Card.objects.raw(f'select * from moviecards_card as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id where movieid in {three_card_id}')
-    print(final_three)
-    serializer = normaldetailSerializer(final_three, many=True)
-    return Response(serializer.data)
+    card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
+    play_card = [] # 플레이할 카드!
+    for data in card:
+        selected = Card.objects.raw(f'select * from moviecards_card as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id where movieid = {data.movieid}')
+        play_card.append(selected[0])
+    serializer = normaldetailSerializer(play_card, many=True)
+    return Response(serializer.data) 
 
 
 
