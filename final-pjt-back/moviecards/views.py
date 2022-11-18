@@ -123,7 +123,7 @@ def card_detail(request, card_pk):
     card = Card.objects.raw(f'select * from moviecards_card where movieid={card_pk}') # 리스트형태로 준다.
     print(card[0].movietype)
     # Cards와 개별카드 테이블의 경우 1:1이므로 NL을 사용하고 스킬의 경우에는 1:N이기 때문에 left join을 사용해서 구했다.
-    card = Card.objects.raw(f'select * from moviecards_card as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id where movieid = {card_pk}')
+    card = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card_pk} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id')
     if len(card) == 1: # 만약 card의 개수가 1개라면 해당 카드만 반환 => many=True를 사용할 수 없음
         serializer = normaldetailSerializer(card[0])
         return Response(serializer.data)
@@ -137,7 +137,7 @@ def plus(request):
     card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
     play_card = [] # 플레이할 카드!
     for data in card:
-        selected = Card.objects.raw(f'select * from moviecards_card as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id where movieid = {data.movieid}')
+        selected = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {data.movieid}) as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id')
         play_card.append(selected[0])
     serializer = normaldetailSerializer(play_card, many=True)
     return Response(serializer.data) 
