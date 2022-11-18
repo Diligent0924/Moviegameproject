@@ -116,7 +116,7 @@ def skill_list(request):
     return Response(serializer.data)
 
 # 카드들을 확인할 수 있는 곳
-@api_view(['GET'])
+@api_view(['GET']) 
 def card_detail(request, card_pk):
     card = Card.objects.raw(f'select * from moviecards_card where movieid={card_pk}') # 리스트형태로 준다.
     print(card[0].movietype)
