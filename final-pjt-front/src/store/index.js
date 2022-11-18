@@ -47,7 +47,6 @@ export default new Vuex.Store({
       const username = payload.username
       const password1 = payload.password1
       const password2 = payload.password2
-      console.log(username, password1, password2)
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
@@ -72,7 +71,29 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err)
       })
-    }
+    },
+    createDeckList(context) {
+      context
+      axios({
+        method: 'post',
+        url: `${API_URL}/moviecards/normalcard_list/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // }
+      })
+        .then(res => { console.log(res) })
+        .catch(err => { console.log(err) })
+
+      axios({
+        method: 'post',
+        url: `${API_URL}/moviecards/bosscard_list/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // }
+      })
+        .then(res => { console.log(res) })
+        .catch(err => { console.log(err) })
+    },
   },
   modules: {
   }

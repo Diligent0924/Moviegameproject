@@ -20,6 +20,7 @@
 import CardPack from '@/components/CardPack'
 import MyDeck from '@/components/MyDeck'
 
+
 export default {
   name: 'FirstDeckView',
   components: {
@@ -34,6 +35,9 @@ export default {
     },
     countUpdate (newCount) {
       this.count = newCount
+    },
+    createDeckList() {
+      this.$store.dispatch('createDeckList')
     }
   },
   data() {
@@ -41,6 +45,9 @@ export default {
       count: 0
     }
   },
+  created() {
+    this.createDeckList()
+  }
 
 
 }

@@ -17,6 +17,7 @@
 
 <script>
 import CardPackItem from '@/components/CardPackItem'
+import axios from 'axios'
 
 export default {
   name: 'CardPack',
@@ -31,8 +32,22 @@ export default {
   },
   methods: {
     openCard() {
+      const API_URL = 'http://127.0.0.1:8000'
       this.count++
       this.$emit('count-up', this.count)
+
+      axios({
+        method: 'get',
+        url: `${API_URL}/moviecards/plus/`
+      })
+        .then(res => {
+          console.log(res)
+          let temp = [res.data[0].name, res.data[1].name, res.data[2].name]
+          this.cards = temp
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

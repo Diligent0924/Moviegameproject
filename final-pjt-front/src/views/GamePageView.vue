@@ -2,8 +2,8 @@
   <div>
     <h1>
       GamePageView
-      <router-view></router-view>
     </h1>
+      <router-view></router-view>
   </div>
 </template>
 
