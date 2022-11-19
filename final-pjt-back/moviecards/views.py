@@ -91,8 +91,10 @@ def bosscard_list(request): # 보스 카드를 더한다.
     elif request.method == 'POST':
         # 중복방지 필요
         bosscard = BossCard.objects.raw('select * from moviecards_bosscard')
-        if len(bosscard) >= 7:
-            return Response(status=status.HTTP_202_ACCEPTED)
+        if len(bosscard) >= 7: # BossCard를 보내줘야지!
+            bosscard = BossCard.objects.raw('select * from moviecards_bosscard')
+            serializer = BossCardSerializer(bosscard, many=True)
+            return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         for i in range(7): 
             card = Card(movieid=boss_info[i]["id"],movietype='boss')
             card.save()
