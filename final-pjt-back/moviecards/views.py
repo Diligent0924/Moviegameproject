@@ -15,6 +15,7 @@ from .models import Card,NormalCard,UniqueCard,BossCard,Skill
 import random
 import requests
 import json
+from .apikey import tmdb_api_key
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
@@ -39,7 +40,7 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
         # 해리포터 id 리스트
         harry_list = [671,672,673,674,675,767,12445]
         for i in range(1,11): # Page를 가져온다. => 20개마다 5개씩으로 산정
-            res = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key=6c79aec26c8ca6dcd33960ef33a7008a&page={i}&language=ko')
+            res = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key={tmdb_api_key}&page={i}&language=ko')
             database = res.json()['results'] # dic형태로 나타난다. => 데이터 들고옴!
             for data in database: # 상위 20개씩 들고온다.
                 if data["id"] not in harry_list:
