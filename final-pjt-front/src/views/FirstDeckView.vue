@@ -11,7 +11,7 @@
       <MyDeck/>
     </div>
     <div>
-      <b-button :class="{disabled : count < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
+      <b-button :class="{disabled : cardNum < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
     </div>
   </div>
 </template>
@@ -40,16 +40,14 @@ export default {
       this.$store.dispatch('createDeckList')
     }
   },
-  data() {
-    return {
-      count: 0
+  computed: {
+    cardNum() {
+      return this.$store.getters.cardNum
     }
   },
   created() {
     this.createDeckList()
-  }
-
-
+  },
 }
 </script>
 

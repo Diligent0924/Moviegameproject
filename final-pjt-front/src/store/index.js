@@ -15,8 +15,15 @@ export default new Vuex.Store({
   state: {
     token: null,
     scores: null,
+    bossCards: [],
+    userCards: [],
+    randomCards: ['1번 카드', '2번 카드', '3번 카드'],
+    bossLevel: 0,
   },
   getters: {
+    cardNum(state) {
+      return state.userCards.length
+    }
   },
   mutations: {
     SAVE_TOKEN(state, token) {
@@ -26,7 +33,17 @@ export default new Vuex.Store({
     DELETE_TOKEN(state) {
       state.token = null
     },
+    PICK_CARD(state, pickedCard) {
+      state.userCards.push(pickedCard)
+    },
+    MAKE_BOSSCARD(state, bossList) {
+      state.bossCards = bossList
+    },
+    RANDOM_CARDS(state, payload) {
+      state.randomCards = payload
+    }
   },
+  // ACTIONS
   actions: {
     logIn(context, payload) {
       const username = payload.username
@@ -73,7 +90,6 @@ export default new Vuex.Store({
       })
     },
     createDeckList(context) {
-      context
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/normalcard_list/`,
@@ -91,9 +107,30 @@ export default new Vuex.Store({
         //   Authorization: `Token ${context.state.token}`
         // }
       })
-        .then(res => { console.log(res) })
+        .then(res => {
+          console.log(res)
+          context.commit('MAKE_BOSSCARD', res.data)
+        })
         .catch(err => { console.log(err) })
     },
+    pickCard(context, pickedCard) {
+      context.commit('PICK_CARD', pickedCard)
+    },
+    openCard(context) {
+      const API_URL = 'http://127.0.0.1:8000'
+
+      axios({
+        method: 'get',
+        url: `${API_URL}/moviecards/plus/`
+      })
+        .then(res => {
+          let payload = [res.data[0], res.data[1], res.data[2]]
+          context.commit('RANDOM_CARDS', payload)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
   modules: {
   }
