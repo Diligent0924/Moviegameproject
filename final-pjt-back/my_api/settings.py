@@ -33,8 +33,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Django Apps
     'accounts',
-    'articles',
+    # 'articles',
     'moviecards',
+    'scoreboard',
     'rest_framework',
 
     # CORS policy
