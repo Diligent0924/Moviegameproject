@@ -2,7 +2,7 @@
   <div>
     <div style="display: flex; justify-content: center;">
       <PlayerCardItem
-        v-for="(card, index) in cards"
+        v-for="(card, index) in userCards"
         :key="`${index}-${card}inplayerarea`"
         :card=card
       />
@@ -22,9 +22,9 @@ export default {
   components: {
     PlayerCardItem
   },
-  data() {
-    return {
-      cards: ['card1', 'card2', 'card3', 'card4', 'card5']
+  computed: {
+    userCards() {
+      return this.$store.state.userCards
     }
   }
 }
