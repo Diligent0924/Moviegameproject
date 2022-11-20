@@ -2,15 +2,12 @@
   <div>
     <div style="display: flex; justify-content: center;">
       <PlayerCardItem
-        v-for="(card, index) in userCards"
+        v-for="(card, index) in userHand"
         :key="`${index}-${card}inplayerarea`"
         :card=card
+        @playCard="playCard"
       />
-
     </div>
-    <h3>
-      플레이어 공간
-    </h3>
   </div>
 </template>
 
@@ -22,9 +19,12 @@ export default {
   components: {
     PlayerCardItem
   },
-  computed: {
-    userCards() {
-      return this.$store.state.userCards
+  props: {
+    userHand: Array,
+  },
+  methods: {
+    playCard(payload) {
+      this.$emit('play-card', payload)
     }
   }
 }

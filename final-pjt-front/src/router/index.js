@@ -10,6 +10,7 @@ import FirstDeckView from '@/views/FirstDeckView'
 import PlayingAreaView from '@/views/PlayingAreaView'
 import CoinAreaView from '@/views/CoinAreaView'
 import ScoreDetailView from '@/views/ScoreDetailView'
+import CreateArticleView from '@/views/CreateArticleView'
 
 
 
@@ -37,6 +38,11 @@ const routes = [
     component: InvenView,
   },
   {
+    path: '/createarticle',
+    name: 'createarticle',
+    component: CreateArticleView,
+  },
+  {
     path: '/game',
     name: 'game',
     component: GamePageView,
@@ -48,12 +54,12 @@ const routes = [
       },
       {
         path: 'playing',
-        name:'playing',
+        name: 'playing',
         component: PlayingAreaView
       },
       {
         path: 'coin',
-        name:'coin',
+        name: 'coin',
         component: CoinAreaView
       }
     ]

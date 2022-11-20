@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
 import createPersistedState from 'vuex-persistedstate'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     userCards: [],
     randomCards: ['1번 카드', '2번 카드', '3번 카드'],
     bossLevel: 0,
+    useTurns: [],
+    finalUserCard: [],
+    finalBossLevel: 0,
   },
   getters: {
     cardNum(state) {
@@ -41,6 +45,18 @@ export default new Vuex.Store({
     },
     RANDOM_CARDS(state, payload) {
       state.randomCards = payload
+    },
+    WIN(state, payload) {
+      state.bossLevel++
+      state.useTurns.push(payload.turns)
+    },
+    LOSE(state, payload) {
+      state.useTurns.push(payload.turns)
+      state.finalUserCard = _.cloneDeep(state.userCards)
+      state.finalBossLevel = _.cloneDeep(state.bossLevel)
+      state.finalBossLevel++
+      state.userCards = []
+      state.bossLevel = 0
     }
   },
   // ACTIONS
@@ -130,6 +146,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    win(context, payload) {
+      context.commit('WIN', payload)
+    },
+    lose(context, payload) {
+      context.commit('LOSE', payload)
     }
   },
   modules: {

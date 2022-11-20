@@ -3,7 +3,7 @@
     <h3>
       My Deck
     </h3>
-    <div>
+    <div style="display: flex;">
       <MyCard
        v-for="(card, index) in userCards"
        :key="`${card.id}-${index}`"
