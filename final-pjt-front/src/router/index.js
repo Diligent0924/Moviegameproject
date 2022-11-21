@@ -33,6 +33,11 @@ const routes = [
     component: ScoreBoardView,
   },
   {
+    path: '/scoreboard/:id',
+    name:'scoredetail',
+    component: ScoreDetailView,
+  },
+  {
     path: '/inven',
     name: 'inven',
     component: InvenView,
@@ -63,11 +68,6 @@ const routes = [
         component: CoinAreaView
       }
     ]
-  },
-  {
-    path: '/scoreboard/detail',
-    name: 'scoreboard-detail',
-    component: ScoreDetailView,
   },
   {
     path: '*',

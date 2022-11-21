@@ -1,17 +1,10 @@
 <template>
   <div>
     <h1>
-      스코어 보드 전체
+      스코어 보드
     </h1>
-    <ScoreBoardItem/>
     <hr>
-    <ScoreBoardItem/>
-    <hr>
-    <ScoreBoardItem/>
-    <hr>
-    <ScoreBoardItem/>
-    <hr>
-    <ScoreBoardItem/>
+    <ScoreBoardItem v-for="(score, index) in scores" :key="index" :score="score" />
 
   </div>
 </template>
@@ -25,23 +18,14 @@ export default {
   components: {
     ScoreBoardItem
   },
-  // methods: {
-  //   getScoreBoard() {
-  //     axios({
-  //       methods: 'post',
-  //       url: 'https://www.google.com/'
-  //     })
-  //       .then(response => {
-  //         console.log(response.data);
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
-  // },
-  // created() {
-  //   this.getScoreBoard()
-  // },
+  methods: {
+    getScoreBoard() {
+      this.$store.dispatch('getScoreBoard')
+    }
+  },
+  created() {
+    this.getScoreBoard()
+  },
   computed: {
     scores() {
       return this.$store.state.scores;

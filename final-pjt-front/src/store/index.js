@@ -29,6 +29,7 @@ export default new Vuex.Store({
     finalBossLevel: 0,
     playerHp: 40,
     canGo: true,
+    scores: [],
   },
   getters: {
     cardNum(state) {
@@ -91,12 +92,16 @@ export default new Vuex.Store({
       state.finalUserCard = []
       state.useTurns = []
       if (clearMessage === 'Failed') {
+        console.log('111111')
         state.token = null
         state.username = null
       }
     },
     CAN_GO_CHANGE(state) {
       state.canGo = !state.canGo
+    },
+    GET_SCORE_BOARD(state, scores) {
+      state.scores = scores
     }
   },
   // ACTIONS
@@ -227,6 +232,18 @@ export default new Vuex.Store({
     },
     canGoChange(context) {
       context.commit('CAN_GO_CHANGE')
+    },
+    getScoreBoard(context) {
+      axios({
+        methods: 'get',
+        url: `${API_URL}/scoreboard/`
+      })
+        .then(res => {
+          context.commit('GET_SCORE_BOARD', res.data)
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   modules: {

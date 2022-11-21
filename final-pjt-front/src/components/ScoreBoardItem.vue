@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <h3>
-      등수 / 덱 / 스테이지 / 자세히보기
-    </h3>
+  <div @click="goToDetail">
+    <span>{{ score.user }} | {{ score.title }} | {{ score.stage }}</span>
+    <hr>
   </div>
 </template>
 
@@ -11,6 +10,14 @@
 
 export default {
   name: 'ScoreBoardItem',
+  props: {
+    score: Object,
+  },
+  methods: {
+    goToDetail() {
+      this.$router.push({ name: 'scoredetail', params: {'id': this.score.id} })
+    }
+  }
 }
 </script>
 
