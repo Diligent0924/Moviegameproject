@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import BoardListSerializer,BoardSerializer, CommentSerializer
 from .models import Board, Comment, MovieCard
 from moviecards.models import Card
-
+from accounts.models import User
 
 
 @api_view(['GET', 'POST'])
@@ -27,21 +27,25 @@ def scoreboard_list(request):
         serializer = BoardListSerializer(articles, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'POST':
+    elif request.method == 'POST': # 마지막에 데이터를 추가한 후에 해당 유저를 탈퇴처리 시킨다.
         data = request.data
         board = Board(stage=data['stage'],user=data['user'], title=data['title'], content=data['content'])
         board.save()
         # 해당 카드를 세부정보에 표현하는 방식..!
         for movie_id in data["movie_id"]:
             card = Card.objects.raw(f'select * from moviecards_card where movieid = {movie_id}')
-            result = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card[0].movieid} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id')
+            result = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card[0].movieid} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s1.movieid = s3.card_id')
             if card[0].movietype == 'normal':
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp)            
             else:
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp, skillcomment=result[0].skillcomment)            
             print(result[0].movietype)
-            moviecard.save() 
-        return Response(status=status.HTTP_201_CREATED)
+            moviecard.save()
+
+        # 해당 회원을 그냥 탈퇴시킴
+        user = get_object_or_404(User, username = data['user'])
+        user.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'DELETE'])

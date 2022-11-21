@@ -26,6 +26,4 @@ extra_settings = [
 for i in range(len(movie_id_list)):
         res = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id_list[i]}?api_key={tmdb_api_key}&language=ko')
         data = res.json()
-        unique_list.append({"id": i, "name": data['title'], "poster_path": data['poster_path'],"attack_damage": data['vote_average'] * 3,"hp" : data['popularity'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment']})
-
-print(unique_list)
+        unique_list.append({"id": movie_id_list[i], "name": data['title'], "poster_path": data['poster_path'],"attack_damage": data['vote_average'] * 3,"hp" : data['popularity'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment']})

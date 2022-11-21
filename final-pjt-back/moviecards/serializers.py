@@ -20,7 +20,7 @@ class UniqueSkillSerializer(serializers.ModelSerializer):
         read_only_fields = ('card_id',)
 
 class UniqueCardSerializer(serializers.ModelSerializer):
-    skill_set = UniqueSkillSerializer(many=True, read_only=True)
+    uniqueskill_set = UniqueSkillSerializer(many=True, read_only=True)
     class Meta:
         model = UniqueCard
         fields = "__all__"
