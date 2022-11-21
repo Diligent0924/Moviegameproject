@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .serializers import CardSerializer,NormalCardSerializer,UniqueCardSerializer,BossCardSerializer, SkillSerializer,normaldetailSerializer
-from .models import Card,NormalCard,UniqueCard,BossCard,Skill
+from .serializers import CardSerializer,NormalCardSerializer,UniqueCardSerializer,BossCardSerializer, UniqueSkillSerializer,BossSkillSerializer,normaldetailSerializer,UniquedetailSerializer,BossdetailSerializer,plusSerializer
+from .models import Card,NormalCard,UniqueCard,BossCard,UniqueSkill,BossSkill
 
 import random
 import requests
@@ -47,14 +47,8 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
                 if data["id"] not in harry_list:
                     card = Card(movieid=data['id'],movietype='normal')
                     card.save()
-                    normal_card = NormalCard(card=card, name=data['title'], posterpath = str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}"),attackdamage = int(data["vote_average"]*3), hp = int(data['popularity']//10))
+                    normal_card = NormalCard(card=card, name=data['title'], posterpath = str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}"),attackdamage = int(data["vote_average"]*3), hp = int(data['popularity']**(1/2)))
                     normal_card.save()
-                    
-
-            # normal_card_database = random.sample(database, 5) # 20개 중에 5 개 뽑으면 됨
-            # for data in normal_card_database: 
-            #     if data["id"] not in harry_list:
-            #         card = get_object_or_404(Card, movieid=data['id'])
         return Response(status=status.HTTP_201_CREATED)
 
 # 특수 카드를 더하는 공간
@@ -62,23 +56,19 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
 # @permission_classes([IsAuthenticated])
 def uniquecard_list(request):
     if request.method == 'GET':
-        bosscard = BossCard.objects.raw("select * from moviecards_uniquecard")
-        serializer = UniqueCardSerializer(bosscard, many=True)
+        uniquecard = BossCard.objects.raw("select * from moviecards_uniquecard")
+        serializer = UniqueCardSerializer(uniquecard, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        # for i in range(7): 
-        #     if boss_info[i]['id'] not in harry_list:
-        #         continue
-        #     # Card Table에 추가
-        #     card = Card(movie_id=boss_info[i]["id"],movie_type='boss')
-        #     card.save()
-        #     # BossCard Table에 추가
-        #     bosscard = BossCard(card = card, name=boss_info[i]['name'], poster_path = boss_info[i]['poster_path'], attack_damage = boss_info[i]["AD"], hp = boss_info[i]["HP"])
-        #     bosscard.save()
-        #     # SkillCard Table에 추가
-        #     for j in range(len(boss_info[i]['skill_type'])):
-        #         skillcard = Skill(card=card, skill_type=boss_info[i]['skill_type'][j], skill_range=boss_info[i]['skill_range'][j], skill_comment=boss_info[i]['skill_comment'][j])
-        #         skillcard.save()
+        for unique_card in unique_list:
+            card = Card(movieid=unique_card['id'],movietype='unique')
+            card.save()
+
+            uniquecard = UniqueCard(card = card, name=unique_card['name'], posterpath = unique_card['poster_path'], attackdamage = unique_card["attack_damage"], hp = unique_card["hp"])
+            uniquecard.save()
+
+            skillcard = UniqueSkill(card=uniquecard, skilltype=unique_card['skill_type'], skillrange=unique_card['skill_range'], skillcomment=unique_card['skill_comment'])
+            skillcard.save()
         return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET','POST'])
@@ -87,6 +77,7 @@ def bosscard_list(request): # 보스 카드를 더한다.
     if request.method == 'GET':
         bosscard = BossCard.objects.raw("select * from moviecards_bosscard")
         serializer = BossCardSerializer(bosscard, many=True)
+        print(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
         # 중복방지 필요
@@ -102,29 +93,31 @@ def bosscard_list(request): # 보스 카드를 더한다.
             bosscard.save()
             # SkillCard Table에 추가
             for j in range(len(boss_info[i]['skill_type'])):
-                skillcard = Skill(card=card, skilltype=boss_info[i]['skill_type'][j], skillrange=boss_info[i]['skill_range'][j], skillcomment=boss_info[i]['skill_comment'][j])
+                skillcard = BossSkill(card=bosscard, skilltype=boss_info[i]['skill_type'][j], skillrange=boss_info[i]['skill_range'][j], skillcomment=boss_info[i]['skill_comment'][j])
                 skillcard.save()
         return Response(status=status.HTTP_201_CREATED)
 
 # 스킬 카드들의 집합소
 @api_view(['GET'])
 def skill_list(request):
-    bosscard = get_list_or_404(Skill)
-    serializer = SkillSerializer(bosscard, many=True)
-    return Response(serializer.data)
+    # bosscard = get_list_or_404(Skill)
+    # serializer = SkillSerializer(bosscard, many=True)
+    return Response()
 
 # 카드들을 확인할 수 있는 곳
 @api_view(['GET']) 
 def card_detail(request, card_pk):
     card = Card.objects.raw(f'select * from moviecards_card where movieid={card_pk}') # 리스트형태로 준다.
     print(card[0].movietype)
-    # Cards와 개별카드 테이블의 경우 1:1이므로 NL을 사용하고 스킬의 경우에는 1:N이기 때문에 left join을 사용해서 구했다.
-    card = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card_pk} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id')
-    if len(card) == 1: # 만약 card의 개수가 1개라면 해당 카드만 반환 => many=True를 사용할 수 없음
+    # movietype이 normal, unique, boss 중 어떤 것이냐에 따라서 serializer를 다르게 보내준다.
+    if card[0].movietype == 'normal':
         serializer = normaldetailSerializer(card[0])
         return Response(serializer.data)
-    else: # 만약 card의 개수가 2개 이상이라면 해당 카드들을 사용 => many = True를 사용
-        serializer = normaldetailSerializer(card, many=True) # 이부분 그냥 일부분만 serialize가 가능할거같은데 나중에 하자!
+    elif card[0].movietype == 'unique':
+        serializer = UniquedetailSerializer(card[0])
+        return Response(serializer.data)
+    else:
+        serializer = BossdetailSerializer(card[0])
         return Response(serializer.data)
 
 @api_view(['GET']) # POST로 변경 필요
@@ -133,11 +126,11 @@ def plus(request):
     card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
     play_card = [] # 플레이할 카드!
     for data in card:
-        selected = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {data.movieid}) as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_skill as s3 on s1.movieid = s3.card_id')
+        selected = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {data.movieid}) as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s1.movieid = s3.card_id')
         play_card.append(selected[0])
-    serializer = normaldetailSerializer(play_card, many=True)
+    
+    serializer = plusSerializer(play_card, many=True)
     return Response(serializer.data) 
-
 
 
 #str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}")

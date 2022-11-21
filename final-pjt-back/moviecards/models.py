@@ -31,9 +31,15 @@ class BossCard(models.Model):
     attackdamage = models.IntegerField()
     hp = models.IntegerField()
 
-# 만약 type이 unique거나 boss일 경우에만 들어갈 수 있도록 하면 된다.
-class Skill(models.Model):
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+class UniqueSkill(models.Model):
+    card = models.ForeignKey(UniqueCard, on_delete=models.CASCADE)
     skilltype = models.CharField(max_length=100)
     skillrange = models.IntegerField() # 회복이든 뭐든~
     skillcomment = models.CharField(max_length=100, default = "이 카드는 평범한 카드입니다...")
+# 만약 type이 unique거나 boss일 경우에만 들어갈 수 있도록 하면 된다.
+class BossSkill(models.Model):
+    card = models.ForeignKey(BossCard, on_delete=models.CASCADE)
+    skilltype = models.CharField(max_length=100)
+    skillrange = models.IntegerField() # 회복이든 뭐든~
+    skillcomment = models.CharField(max_length=100, default = "이 카드는 평범한 카드입니다...")
+
