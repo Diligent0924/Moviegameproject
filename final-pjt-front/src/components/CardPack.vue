@@ -11,7 +11,7 @@
         style="margin-left: 20px; margin-right: 20px;"
       />
     </div>
-    <b-button :class="{disabled : cardNum >= 10}" variant="outline-primary" @click="openCard">카드 오픈!</b-button>
+    <b-button :class="{disabled : cardNum}" variant="outline-primary" @click="openCard">카드 오픈!</b-button>
   </div>
 </template>
 

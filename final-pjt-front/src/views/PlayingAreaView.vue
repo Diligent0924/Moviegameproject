@@ -10,8 +10,8 @@
       <!-- 무덤 -->
       <DeadCards style="float: right; margin-right: 50px;" :deadCards="deadCards" />
     </div>
-    <PlayerArea class="downside" :userHand="startDeck" @play-card="playCard" />
     <InField :fieldCards="inFields" @attack="attack" @goToDie="goToDie" />
+    <PlayerArea class="downside" :userHand="startDeck" @play-card="playCard" />
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
       bossLevel: 0,
       inAttack: false,
       cardIndex : null,
-      playerHp: 30,
+      playerHp: 40,
     }
   },
   created() {
@@ -54,6 +54,8 @@ export default {
   },
   methods: {
     deckCopy() {
+      this.bossLevel = this.$store.state.bossLevel
+      this.playerHp = this.$store.state.playerHp
       this.boss = _.cloneDeep(this.$store.state.bossCards[this.bossLevel])
       this.copiedDeck = _.cloneDeep(this.$store.state.userCards)
       this.startDeck = _.sampleSize(this.copiedDeck, 5)
@@ -109,6 +111,7 @@ export default {
       const damage = this.inFields[this.cardIndex]['attackdamage']
       this.boss.hp -= damage
       this.battleLog = `${attacking}이 ${this.boss.name}에게 ${damage}의 피해를 입혔다.\n 다음 행동을 수행하세요.`
+      this.inAttack = false
     },
     cancelAttack() {
       this.inAttack = false
@@ -195,10 +198,10 @@ export default {
 </script>
 
 <style>
-  .downside {
+  /* .downside {
     position: fixed;
     bottom: 60px;
     width: 100%;
-  }
+  } */
 
 </style>

@@ -13,7 +13,21 @@ export default {
   name: 'InvenView',
   methods: {
     gameStart() {
-      this.$router.push({ name: 'start' })
+      if (this.isLogined) {
+        this.$router.push({ name: 'start' })
+      } else {
+        alert('로그인이 필요한 페이지입니다.')
+        this.$router.push({ name: 'login' })
+      }
+    }
+  },
+  computed: {
+    isLogined() {
+      if (this.$store.state.token) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }

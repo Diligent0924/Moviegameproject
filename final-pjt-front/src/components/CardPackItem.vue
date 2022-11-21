@@ -10,35 +10,36 @@
 
 <script>
 export default {
- name: 'CardPackItem',
- props: {
-  card: Object,
- },
- computed: {
-  skillType() {
-    if (this.card.skilltype) {
-      return this.card.skilltype
-    } else {
-      return '스킬이 없음'
-    }
+  name: 'CardPackItem',
+  props: {
+    card: Object,
+    coinLeft: Number,
   },
-  cardNum() {
-    return this.$store.getters.cardNum
-  }
- },
- methods: {
-  pickCard() {
-    if (this.cardNum === 10) {
-      alert('이미 10장의 카드를 선택하였습니다!')
-    } else {
-        this.$store.dispatch('pickCard', this.card)
-  
-        if (this.cardNum < 10) {
-          this.$store.dispatch('openCard')
+  computed: {
+    skillType() {
+      if (this.card.skilltype) {
+        return this.card.skilltype
+      } else {
+        return '스킬이 없음'
+      }
+    },
+    cardNum() {
+      return this.$store.getters.cardNum
+    }
+   },
+   methods: {
+    pickCard() {
+      if (this.coinLeft < 1) {
+        alert('이미 4번의 기회를 모두 사용하였습니다')
+      } else {
+          this.$store.dispatch('pickCard', this.card)
+       
+          if (this.cardNum < 10) {
+            this.$store.dispatch('openCard')
+          }
         }
       }
-    }
-  },
+    },
 }
 </script>
 

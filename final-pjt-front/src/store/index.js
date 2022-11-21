@@ -23,6 +23,7 @@ export default new Vuex.Store({
     useTurns: [],
     finalUserCard: [],
     finalBossLevel: 0,
+    playerHp: 40,
   },
   getters: {
     cardNum(state) {
@@ -49,6 +50,7 @@ export default new Vuex.Store({
     WIN(state, payload) {
       state.bossLevel++
       state.useTurns.push(payload.turns)
+      state.playerHp = state.playerHp + 5
     },
     LOSE(state, payload) {
       state.useTurns.push(payload.turns)
@@ -57,6 +59,14 @@ export default new Vuex.Store({
       state.finalBossLevel++
       state.userCards = []
       state.bossLevel = 0
+    },
+    DELETE_CARD(state, card) {
+      const index = state.userCards.indexOf(card)
+      console.log(index)
+      state.userCards.splice(index, 1)
+    },
+    RESET_RANDOM_CARD(state) {
+      state.randomCards = ['1번 카드', '2번 카드', '3번 카드']
     }
   },
   // ACTIONS
@@ -152,6 +162,12 @@ export default new Vuex.Store({
     },
     lose(context, payload) {
       context.commit('LOSE', payload)
+    },
+    deleteCard(context, card) {
+      context.commit('DELETE_CARD', card)
+    },
+    resetRandomCard(context) {
+      context.commit('RESET_RANDOM_CARD')
     }
   },
   modules: {

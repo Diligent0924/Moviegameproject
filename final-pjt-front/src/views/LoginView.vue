@@ -10,6 +10,7 @@
 
       <input type="submit" value="logIn">
     </form>
+    <b-button block variant="danger" @click="signUp">회원 가입</b-button>
   </div>
 </template>
 
@@ -31,6 +32,9 @@ export default {
         username, password
       }
       this.$store.dispatch('logIn', payload)
+    },
+    signUp() {
+      this.$router.push({ name: 'signup' })
     }
   }
 }
