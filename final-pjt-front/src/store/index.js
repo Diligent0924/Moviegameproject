@@ -15,10 +15,14 @@ export default new Vuex.Store({
   ],
   state: {
     token: null,
-    scores: null,
+    username: null,
     bossCards: [],
     userCards: [],
-    randomCards: ['1번 카드', '2번 카드', '3번 카드'],
+    randomCards: [
+      { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+      { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+      { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null}
+    ],
     bossLevel: 0,
     useTurns: [],
     finalUserCard: [],
@@ -31,8 +35,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    SAVE_TOKEN(state, token) {
-      state.token = token
+    SAVE_TOKEN(state, payload) {
+      state.token = payload.token
+      state.username = payload.username
       router.push({ name: 'inven' })
     },
     DELETE_TOKEN(state) {
@@ -51,6 +56,13 @@ export default new Vuex.Store({
       state.bossLevel++
       state.useTurns.push(payload.turns)
       state.playerHp = state.playerHp + 5
+      if (state.bossLevel === 7) {
+        state.finalUserCard = _.cloneDeep(state.userCards)
+        state.finalBossLevel = _.cloneDeep(state.bossLevel)
+        state.userCards = []
+        state.bossLevel = 0
+        state.playerHp = 40
+      }
     },
     LOSE(state, payload) {
       state.useTurns.push(payload.turns)
@@ -59,6 +71,7 @@ export default new Vuex.Store({
       state.finalBossLevel++
       state.userCards = []
       state.bossLevel = 0
+      state.playerHp = 40
     },
     DELETE_CARD(state, card) {
       const index = state.userCards.indexOf(card)
@@ -66,7 +79,19 @@ export default new Vuex.Store({
       state.userCards.splice(index, 1)
     },
     RESET_RANDOM_CARD(state) {
-      state.randomCards = ['1번 카드', '2번 카드', '3번 카드']
+      state.randomCards = [
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null}
+      ]
+    },
+    CREATE_ARTICLE(state, clearMessage) {
+      state.finalBossLevel = 0
+      state.finalUserCard = []
+      state.useTurns = []
+      if (clearMessage === 'Failed') {
+        state.token = null
+      }
     }
   },
   // ACTIONS
@@ -82,7 +107,7 @@ export default new Vuex.Store({
         }
       })
         .then(res => {
-          context.commit('SAVE_TOKEN', res.data.key)
+          context.commit('SAVE_TOKEN', {'token': res.data.key, 'username': username })
         })
         .catch(err => console.log(err))
     },
@@ -98,7 +123,7 @@ export default new Vuex.Store({
         }
       })
         .then(res => {
-          context.commit('SAVE_TOKEN', res.data.key)
+          context.commit('SAVE_TOKEN', {'token': res.data.key, 'username': username })
         })
         .catch(err => console.log(err))
     },
@@ -168,6 +193,32 @@ export default new Vuex.Store({
     },
     resetRandomCard(context) {
       context.commit('RESET_RANDOM_CARD')
+    },
+    createArticle(context, payload) {
+      const movie_id = []
+      context.state.finalUserCard.forEach((card) => {
+        movie_id.push(card.movieid)
+      })
+      
+      axios({
+        method: 'post',
+        url: `${API_URL}/scoreboard/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // },
+        data: {
+          'title': payload.title,
+          'content': payload.content,
+          'user': context.state.username,
+          'stage': context.state.finalBossLevel,
+          'movie_id': movie_id
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          context.commit('CREATE_ARTICLE', payload.clearMessage)
+        })
+        .catch((err) => console.log(err))
     }
   },
   modules: {

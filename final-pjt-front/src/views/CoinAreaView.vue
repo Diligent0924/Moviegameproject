@@ -44,6 +44,7 @@ export default {
     },
     nextStage() {
       this.$router.push({ name: 'playing' })
+      this.$store.dispatch('resetRandomCard')
     }
   },
 }

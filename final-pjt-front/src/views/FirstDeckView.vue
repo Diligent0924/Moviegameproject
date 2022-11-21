@@ -32,6 +32,7 @@ export default {
       this.$router.push({
         name: 'playing'
       })
+      this.$store.dispatch('resetRandomCard')
     },
     countUpdate (newCount) {
       this.count = newCount
