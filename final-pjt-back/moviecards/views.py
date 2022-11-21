@@ -35,16 +35,17 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
         return Response(serializer.data)
     elif request.method == 'POST':
         # 여기서 기존 DB 전체 삭제
-        data = Card.objects.raw('select * from moviecards_card where movietype != "boss"')
+        data = Card.objects.raw('select * from moviecards_card where movietype = "normal"')
         for i in data:
             Card.delete(i)
         # 해리포터 id 리스트
         harry_list = [671,672,673,674,675,767,12445]
+        movie_id_list = [330457,574302,299534,476669,157336,293413,110415,68721,68718,242,220176,372058,568160,11658,18438,773867,619803,518068,282631,396535,496243,200085,437103,567646,385128,158445,72190,209764,107235,79224,51608,47748]
         for i in range(1,11): # Page를 가져온다. => 20개마다 5개씩으로 산정
             res = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key={tmdb_api_key}&page={i}&language=ko')
             database = res.json()['results'] # dic형태로 나타난다. => 데이터 들고옴!
             for data in database: # 상위 20개씩 들고온다.
-                if data["id"] not in harry_list:
+                if data["id"] not in harry_list and data["id"] not in harry_list:
                     card = Card(movieid=data['id'],movietype='normal')
                     card.save()
                     normal_card = NormalCard(card=card, name=data['title'], posterpath = str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}"),attackdamage = int(data["vote_average"]*3), hp = int(data['popularity']**(1/2)))
@@ -60,6 +61,11 @@ def uniquecard_list(request):
         serializer = UniqueCardSerializer(uniquecard, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        # Unique Card를 삭제하고 다시 더하는 공간
+        data = Card.objects.raw('select * from moviecards_card where movietype = "unique"')
+        for i in data:
+            Card.delete(i)
+        
         for unique_card in unique_list:
             card = Card(movieid=unique_card['id'],movietype='unique')
             card.save()

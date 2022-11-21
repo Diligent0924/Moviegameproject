@@ -9,20 +9,44 @@ boss_info = [{"id":671,"name": '스네이프', "poster_path":'https://w.namu.la/
         {"id":12445,"name": '마법의 모자', "poster_path":'https://w.namu.la/s/a272c7937937b251dae026df601f345e26eeaf3263a01d401824b000d31ac738f38168da465d49404faf079683ad294320a522bab164d6450fd4e71bce8f090a2dd55bb9d9fd6edb8a1b1633e44b7ac42ce073005eb6480d2715a1ada5381b68799b24312a9cf1c929fc75d5308eecb4', "AD": 0, "HP": 1000, "skill_type":["others","others"], "skill_range":[0,0], "skill_comment":["구리퓐도르!","임페리오"]}]
 
 unique_list = []
-movie_id_list = [330457,]
+movie_id_list = [330457,574302,299534,476669,157336,293413,110415,68721,68718,242,220176,372058,568160,11658,18438,773867,619803,518068,282631,396535,496243,200085,437103,567646,385128,158445,72190,209764,107235,79224,51608,47748]
 extra_settings = [
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!", "attack_damage" : 0, "hp": 0, "skill_description":"모든 카드에게 데미지를 20씩 줍니다."},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "others", "skill_range": 2, "skill_comment": "나는 필연적 존재이다!", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
-
+        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!", "attack_damage" : 0, "hp": 0, "description":"모든 카드에게 데미지를 20씩 줍니다."},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0, "description": "카드를 두 장 드로우 합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "나는 필연적 존재이다!", "attack_damage": 0, "hp":0, "description":"자신과 상대방 둘 중 한명의 체력이 반으로 줄어듭니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "Manners makes man", "attack_damage": 0, "hp":0, 'description' : "콘솔창이 존대말로 바뀝니다."},
+        {"skill_type": "heal", "skill_range": 10, "skill_comment": "We will find a way. we always have.", "attack_damage": 0, "hp":0, 'description' : "모든 유닛의 체력이 +10 회복됩니다."},
+        {"skill_type": "nuff", "skill_range": -10, "skill_comment": "대중들은 개,돼지 입니다. 적당히 짖어대다 알아서 조용해질 겁니다.", "attack_damage": 30, "hp": 40, 'description' : "모든 유닛의 체력이 -10이 됩니다. "},
+        {"skill_type": "heal", "skill_range": +30, "skill_comment": "프로틴-바", "attack_damage": 0, "hp": 0, 'description' : "캐릭터의 체력이 +30 증가합니다."},
+        {"skill_type": "buff", "skill_range": +10, "skill_comment": "I am Iron man", "attack_damage": 0, "hp": 0, 'description' : "모든 하수인의 공격력이 + 10이 됩니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "백엔드의 신", "attack_damage": 40, "hp": 40, 'description' : "쟝-고"},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "친구는 가까이 두고, 적은 더 가까이 두어야 한다.", "attack_damage": 0, "hp": 0, 'description' : "적이 한턴 공격을 쉽니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "내가 왕이 될 상인가", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 공격력 60 or 공격력 1이 됩니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "키미노 나마에와", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 이번턴 적 챔피언과 공격력이 바뀝니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "하지만, 내가 돌아가면, 다시 날씨가..!", "attack_damage": 0, "hp": 0, 'description' : "필드가 바뀝니다. 상대방의 다음턴 공격력이 -5만큼 감소합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "넌 내 꿈이구 어머니 희망이야. 어서 가.", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 해당 하수인이 손으로 돌아갑니다. 필드 하수인들의 체력이 +10이 됩니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "아무도 없으면 외롭지 않으니까요.", "attack_damage": 0, "hp": 0, 'description' : "필드에 아무것도 없다면 50/50짜리 김씨를 소환합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "우린 노빠꾸다!", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 하수인의 공격력이 40 체력이 1이 됩니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "누가 50이야?", "attack_damage": 20, "hp": 100, 'description' : "그냥 강합니다."},
+        {"skill_type": "heal", "skill_range": 20, "skill_comment": "지나간 일에 새로운 눈물을 낭비하지 말자", "attack_damage": 0, "hp": 0, 'description' : "모든 하수인이 +20 회복됩니다."},
+        {"skill_type": "buff", "skill_range": 10, "skill_comment": "신에게는 아직 12척의 배가 남아있습니다", "attack_damage": 0, "hp": 0, 'description' : "모든 하수인의 공격력이 +10 증가합니다."},
+        {"skill_type": "draw", "skill_range": 3, "skill_comment": "이 사람들 빨리 내보내야돼. 안 그러면 우리까지 위험해져", "attack_damage": 0, "hp": 0, 'description' : "카드를 3장 뽑습니다."},
+        {"skill_type": "draw", "skill_range": 3, "skill_comment": "착해서 돈이 많은 게 아니라 돈이 많으니까 착한 거야", "attack_damage": 0, "hp": 0, 'description' : "카드를 3장 뽑습니다."},
+        {"skill_type": "nuff", "skill_range": 10, "skill_comment": "이런 고병원성 바이러스에 늑장 대응하다가 구제역 사태처럼 전국으로 퍼지기라도 한다면 큰일입니다", "attack_damage": 30, "hp": 60, 'description' : "다른 모든 하수인의 체력이 -10 감소합니다."},
+        {"skill_type": "draw", "skill_range": 3, "skill_comment": "경찰이 고문해서 대학생이 죽었는데, 보도지침이 대수야?", "attack_damage": 0, "hp": 0, 'description' : "카드를 3장 뽑습니다."},
+        {"skill_type": "heal", "skill_range": 40, "skill_comment": "왕갈비통닭 한마리요~", "attack_damage": 0, "hp": 0, 'description' : "하수인 또는 캐릭터를 선택합니다. 체력이 +40 증가합니다."},
+        {"skill_type": "buff", "skill_range": 40, "skill_comment": "작별인사는 하고 가야지", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 이번턴 하수인의 공격력이 +40 증가합니다."},
+        {"skill_type": "heal", "skill_range": 40, "skill_comment": "아빠 딸로 태어나줘서 고맙습니다.", "attack_damage": 0, "hp": 0, 'description' : "내 캐릭터의 체력이 +40 증가합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "사람은 어떤 일이 터진 후에야 후회해. 이건 인간이 멍하거나 나약해서가 아니라. 본능 때문이야", "attack_damage": 40, "hp": 60, 'description' : "필드의 모든 하수인을 파괴합니다."},
+        {"skill_type": "draw", "skill_range": 3, "skill_comment": "나 지금 이거 일생일대 기횐 거 같애", "attack_damage": 0, "hp": 0, 'description' : "덱에서 카드를 3장 뽑습니다."},
+        {"skill_type": "heal", "skill_range": 10, "skill_comment": "비벼~ 막비벼~", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 해당 하수인의 양 옆의 체력이 +10 증가합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "두려움은 직시하면 그 뿐. 바람은 계산하는 것이 아니라 극복하는 것이다.", "attack_damage": 0, "hp": 0, 'description' : "보스의 체력이 20 이하라면 즉사합니다. 아니라면 -10의 데미지를 줍니다."},
+        {"skill_type": "buff", "skill_range": 40, "skill_comment": "내일을 사는 놈은 오늘만 사는 놈을 못이긴다.", "attack_damage": 0, "hp": 0, 'description' : "하수인을 선택합니다. 해당 하수인의 공격력이 +40 증가합니다. 이번턴에 사망합니다."},
+        {"skill_type": "others", "skill_range": 0, "skill_comment": "음 머~", "attack_damage": 0, "hp": 60, 'description' : "이 소를 죽이지 말아주세요..."},
 ]
 for i in range(len(movie_id_list)):
         res = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id_list[i]}?api_key={tmdb_api_key}&language=ko')
         data = res.json()
-        unique_list.append({"id": movie_id_list[i], "name": data['title'], "poster_path": data['poster_path'],"attack_damage": extra_settings[i]['attack_damage'],"hp" : extra_settings[i]['hp'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment'], "skill_description": extra_settings[i]['skill_description']})
+        unique_list.append({"id": movie_id_list[i], "name": data['title'], "poster_path": data['poster_path'],"attack_damage": extra_settings[i]['attack_damage'],"hp" : extra_settings[i]['hp'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment'], "skill_description": extra_settings[i]['description']})
+
+# print(unique_list)
