@@ -30,6 +30,8 @@ export default {
     pickCard() {
       if (this.cardNum >= 10) {
         alert('이미 10장의 카드를 선택하였습니다.')
+      } else if (this.card.name === '카드명') {
+        alert('카드 오픈 버튼을 눌러주세요.')
       } else {
           this.$store.dispatch('pickCard', this.card)
        

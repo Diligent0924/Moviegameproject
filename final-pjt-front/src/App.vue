@@ -6,7 +6,7 @@
           <img thumbnail rounded fluid src="./assets/SSasstone.png" alt="#" style="width: 50px; height: 50px;">
         </router-link>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <b-button variant="success" v-if="isLogined" @click="logOut">로그 아웃</b-button>
+        <b-button variant="success" v-if="isLogined && notInPlay" @click="logOut">로그 아웃</b-button>
       </div>
       <div>
         <div class="my-2 mx-3">
@@ -39,6 +39,9 @@ export default {
       } else {
         return false; 
       }
+    },
+    notInPlay() {
+      return this.$store.state.canGo
     }
   },
   methods: {

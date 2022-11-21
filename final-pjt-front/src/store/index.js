@@ -28,6 +28,7 @@ export default new Vuex.Store({
     finalUserCard: [],
     finalBossLevel: 0,
     playerHp: 40,
+    canGo: true,
   },
   getters: {
     cardNum(state) {
@@ -91,7 +92,11 @@ export default new Vuex.Store({
       state.useTurns = []
       if (clearMessage === 'Failed') {
         state.token = null
+        state.username = null
       }
+    },
+    CAN_GO_CHANGE(state) {
+      state.canGo = !state.canGo
     }
   },
   // ACTIONS
@@ -219,6 +224,9 @@ export default new Vuex.Store({
           context.commit('CREATE_ARTICLE', payload.clearMessage)
         })
         .catch((err) => console.log(err))
+    },
+    canGoChange(context) {
+      context.commit('CAN_GO_CHANGE')
     }
   },
   modules: {

@@ -29,10 +29,12 @@ export default {
   },
   methods: {
     goToDengeon () {
+      this.$store.dispatch('canGoChange')
       this.$router.push({
         name: 'playing'
       })
       this.$store.dispatch('resetRandomCard')
+      this.$store.dispatch('canGoChange')
     },
     countUpdate (newCount) {
       this.count = newCount

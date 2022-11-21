@@ -37,6 +37,7 @@ export default {
         title, content, clearMessage
       }
       this.$store.dispatch('createArticle', payload)
+      this.$store.dispatch('canGoChange')
       this.$router.push({ name: 'scoreboard' })
     }
   },
