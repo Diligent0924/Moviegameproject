@@ -7,11 +7,14 @@
     <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
     <ConsoleChat style="float: left; margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
     <div>
-      <!-- 무덤 -->
       <DeadCards style="float: right; margin-right: 50px;" :deadCards="deadCards" />
     </div>
-    <InField :fieldCards="inFields" @attack="attack" @goToDie="goToDie" />
-    <PlayerArea class="downside" :userHand="startDeck" @play-card="playCard" />
+    <div>
+      <InField :fieldCards="inFields" @attack="attack" @goToDie="goToDie" />
+    </div>
+    <div>
+      <PlayerArea :userHand="startDeck" @play-card="playCard" />
+    </div>
   </div>
 </template>
 
@@ -118,24 +121,35 @@ export default {
       this.battleLog = '공격을 취소하였습니다. \n다음 행동을 선택해주세요'
     },
     win() {
-      this.battleLog = '축하합니다. 승리하였습니다. 잠시 후 다음 단계로 이동합니다.'
-      setTimeout(() => {
-        this.$router.push({ name: 'coin' })
-        this.$store.dispatch('win', { 'bossLevel': this.bossLevel+1, 'turns': this.turns })
-
-        this.copiedDeck = null
-        this.startDeck =  null
-        this.deadCards = []
-        this.inFields = []
-        this.playCardCount = 2
-        this.battleLog = '전투 시작! 필드에 내려놓을 카드를 클릭해주세요'
-        this.turns = 1
-        this.boss = null
-        this.bossLevel++
-        this.inAttack = false
-        this.cardIndex = null,
-        this.playerHp = this.playerHp+5
-      }, 2000)
+      if (this.bossLevel === 6) {
+        this.battleLog = '축하합니다. 모든 스테이지를 클리어하였습니다! 잠시 후 게시글 작성 페이지로 이동합니다.'
+        setTimeout(() => {
+          this.$store.dispatch('canGoChange')
+          this.$router.push({ name: 'createarticle' })
+          this.$store.dispatch('win', { 'turns': this.turns })
+        }, 1000)
+      } else {
+        this.$store.dispatch('canGoChange')
+        this.battleLog = '축하합니다. 승리하였습니다. 잠시 후 다음 단계로 이동합니다.'
+        setTimeout(() => {
+          this.$router.push({ name: 'coin' })
+          this.$store.dispatch('win', { 'turns': this.turns })
+          this.$store.dispatch('canGoChange')
+  
+          this.copiedDeck = null
+          this.startDeck =  null
+          this.deadCards = []
+          this.inFields = []
+          this.playCardCount = 2
+          this.battleLog = '전투 시작! 필드에 내려놓을 카드를 클릭해주세요'
+          this.turns = 1
+          this.boss = null
+          this.bossLevel++
+          this.inAttack = false
+          this.cardIndex = null,
+          this.playerHp = this.playerHp+5
+        }, 2000)
+      }
     },
     bossAttack() {
       const targets = this.inFields.length
@@ -159,8 +173,10 @@ export default {
     lose() {
       this.battleLog = '안타깝게도 패배하였습니다. 잠시 후 게시글 작성 페이지로 이동합니다.'
       setTimeout(() => {
+        this.$store.dispatch('canGoChange')
         this.$router.push({ name: 'createarticle' })
         this.$store.dispatch('lose', { 'turns': this.turns })
+        this.$store.dispatch('canGoChange')
 
         this.copiedDeck = null
         this.startDeck =  null

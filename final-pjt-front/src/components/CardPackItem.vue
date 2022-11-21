@@ -13,7 +13,6 @@ export default {
   name: 'CardPackItem',
   props: {
     card: Object,
-    coinLeft: Number,
   },
   computed: {
     skillType() {
@@ -29,8 +28,10 @@ export default {
    },
    methods: {
     pickCard() {
-      if (this.coinLeft < 1) {
-        alert('이미 4번의 기회를 모두 사용하였습니다')
+      if (this.cardNum >= 10) {
+        alert('이미 10장의 카드를 선택하였습니다.')
+      } else if (this.card.name === '카드명') {
+        alert('카드 오픈 버튼을 눌러주세요.')
       } else {
           this.$store.dispatch('pickCard', this.card)
        

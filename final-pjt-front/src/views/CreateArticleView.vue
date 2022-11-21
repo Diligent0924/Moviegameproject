@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>모험 기록 작성</h1>
+    <h3>{{ clearMessage }}</h3>
     <b style="color: blueviolet;"><p><span>최종 보스 : {{ finalBoss }}</span> / <span>최종 스테이지 : {{ finalBossLevel }}</span></p></b>
     <h3>사용 카드</h3>
     <div style="display: flex;">
@@ -31,11 +32,13 @@ export default {
     createArticle() {
       const title = this.title
       const content = this.content
+      const clearMessage = this.clearMessage
       const payload = {
-        title, content
+        title, content, clearMessage
       }
       this.$store.dispatch('createArticle', payload)
-      this.$router.push({ name: 'inven' })
+      this.$store.dispatch('canGoChange')
+      this.$router.push({ name: 'scoreboard' })
     }
   },
   computed: {
@@ -47,6 +50,13 @@ export default {
     },
     finalBoss() {
       return this.$store.state.bossCards[this.finalBossLevel-1].name
+    },
+    clearMessage() {
+      if (this.finalBossLevel === 7) {
+        return 'Cleared'
+      } else {
+        return 'Failed'
+      }
     }
   },
   components: {

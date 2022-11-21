@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h3>플레이어 체력 : {{ playerHp }}</h3>
+    <h2>플레이어 체력 : {{ playerHp }}</h2>
     <h3>
       {{turns}} 번째 턴
     </h3>
     <p v-if="isPlayerTurn">{{playerTurn}}</p>
     <p v-if="!isPlayerTurn">{{bossTurn}}</p>
-    <p>{{battleLog}}</p>
+    <h3>{{battleLog}}</h3>
   </div>
 </template>
 
