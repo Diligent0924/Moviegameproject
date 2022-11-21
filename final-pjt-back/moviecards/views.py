@@ -67,7 +67,7 @@ def uniquecard_list(request):
             uniquecard = UniqueCard(card = card, name=unique_card['name'], posterpath = unique_card['poster_path'], attackdamage = unique_card["attack_damage"], hp = unique_card["hp"])
             uniquecard.save()
 
-            skillcard = UniqueSkill(card=uniquecard, skilltype=unique_card['skill_type'], skillrange=unique_card['skill_range'], skillcomment=unique_card['skill_comment'])
+            skillcard = UniqueSkill(card=uniquecard, skilltype=unique_card['skill_type'], skillrange=unique_card['skill_range'], skillcomment=unique_card['skill_comment'], skilldescription=unique_card['skill_description'])
             skillcard.save()
         return Response(status=status.HTTP_201_CREATED)
 

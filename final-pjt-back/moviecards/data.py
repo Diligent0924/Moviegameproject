@@ -11,19 +11,18 @@ boss_info = [{"id":671,"name": '스네이프', "poster_path":'https://w.namu.la/
 unique_list = []
 movie_id_list = [330457,]
 extra_settings = [
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!"},
+        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!", "attack_damage" : 0, "hp": 0, "skill_description":"모든 카드에게 데미지를 20씩 줍니다."},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "others", "skill_range": 2, "skill_comment": "나는 필연적 존재이다!", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
+        {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0},
 
 ]
 for i in range(len(movie_id_list)):
         res = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id_list[i]}?api_key={tmdb_api_key}&language=ko')
         data = res.json()
-        unique_list.append({"id": movie_id_list[i], "name": data['title'], "poster_path": data['poster_path'],"attack_damage": data['vote_average'] * 3,"hp" : data['popularity'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment']})
+        unique_list.append({"id": movie_id_list[i], "name": data['title'], "poster_path": data['poster_path'],"attack_damage": extra_settings[i]['attack_damage'],"hp" : extra_settings[i]['hp'],"skill_type": extra_settings[i]['skill_type'],"skill_range": extra_settings[i]['skill_range'], "skill_comment": extra_settings[i]['skill_comment'], "skill_description": extra_settings[i]['skill_description']})

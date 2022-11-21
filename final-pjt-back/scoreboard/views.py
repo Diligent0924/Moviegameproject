@@ -23,7 +23,7 @@ from accounts.models import User
 # @permission_classes([IsAuthenticated])
 def scoreboard_list(request):
     if request.method == 'GET': # 전체데이터확인
-        articles = Board.objects.raw('select * from scoreboard_board')
+        articles = Board.objects.raw('select * from scoreboard_board order by id')
         serializer = BoardListSerializer(articles, many=True)
         return Response(serializer.data)
 
@@ -39,7 +39,6 @@ def scoreboard_list(request):
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp)            
             else:
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp, skillcomment=result[0].skillcomment)            
-            print(result[0].movietype)
             moviecard.save()
 
         # 해당 회원을 그냥 탈퇴시킴
@@ -54,7 +53,6 @@ def board_detail(request, board_pk):
     print(board)
     if request.method == 'GET':
         serializer = BoardSerializer(board)
-        print(serializer.data)
         return Response(serializer.data)
     
     elif request.method == 'DELETE':
@@ -74,7 +72,6 @@ def comment_list(request):
 def comment_create(request, board_pk):
     # article = Article.objects.get(pk=article_pk)
     board = get_object_or_404(Board, pk=board_pk)
-    print(board)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(board=board)

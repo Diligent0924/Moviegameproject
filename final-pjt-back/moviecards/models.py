@@ -36,6 +36,8 @@ class UniqueSkill(models.Model):
     skilltype = models.CharField(max_length=100)
     skillrange = models.IntegerField() # 회복이든 뭐든~
     skillcomment = models.CharField(max_length=100, default = "이 카드는 평범한 카드입니다...")
+    skilldescription = models.CharField(max_length= 100)
+
 # 만약 type이 unique거나 boss일 경우에만 들어갈 수 있도록 하면 된다.
 class BossSkill(models.Model):
     card = models.ForeignKey(BossCard, on_delete=models.CASCADE)
