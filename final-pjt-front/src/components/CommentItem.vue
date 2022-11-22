@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>
-      {{ comment.id }} : {{comment.content}}
+      {{ comment.user }} : {{comment.content}}
     </p>
   </div>
 </template>

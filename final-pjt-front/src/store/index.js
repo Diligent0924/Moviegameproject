@@ -30,6 +30,7 @@ export default new Vuex.Store({
     playerHp: 40,
     canGo: true,
     scores: [],
+    inven: []
   },
   getters: {
     cardNum(state) {
@@ -119,7 +120,10 @@ export default new Vuex.Store({
         .then(res => {
           context.commit('SAVE_TOKEN', {'token': res.data.key, 'username': username })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err)
+          alert('잘못된 아이디, 비밀번호입니다.')
+        })
     },
     signUp(context, payload) {
       const username = payload.username
@@ -246,7 +250,7 @@ export default new Vuex.Store({
         });
     },
     commentCreate(context, payload) {
-      // payload['user'] = context.state.username
+      const user = context.state.username
       const content = payload.content
       axios({
         method: 'post',
@@ -254,13 +258,26 @@ export default new Vuex.Store({
         // headers: {
         //   Authorization: `Token ${context.state.token}`
         // },
-        data: {content}
+        data: {content, user}
       })
-        .then(() => {
+        .then((res) => {
           context
-          // console.log(res)
+          console.log(res)
         })
         .catch((err) => console.log(err));
+    },
+    getInven(context) {
+      context
+      axios({
+        method: 'get',
+        url: `${API_URL}/inven/`,
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   modules: {

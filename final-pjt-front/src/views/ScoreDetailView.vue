@@ -32,7 +32,8 @@ export default {
   data() {
     return {
       article: null,
-      comments: []
+      comments: [],
+      cnt: 0,
     }
   },
   components: {
@@ -50,9 +51,12 @@ export default {
         url: `${API_URL}/scoreboard/${this.$route.params.id}/`
       })
         .then((res) => {
-          if (res.data.comment_set.length !== this.comments.length) {
+          if (res.data.comment_set.length !== this.comments.length || this.cnt > 3) {
+            this.article = res.data
             this.comments = res.data.comment_set
+            this.cnt = 0
           } else {
+            this.cnt++
             this.getArticleDetail()
           }
         })

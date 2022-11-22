@@ -30,6 +30,9 @@ export default {
         return false
       }
     }
+  },
+  created() {
+    this.$store.dispatch('getInven')
   }
 }
 </script>
