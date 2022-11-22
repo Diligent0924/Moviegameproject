@@ -19,17 +19,29 @@ import json
 def movie_count(request):
     movie_list = Moviecount.objects.raw("select movie_id, count(*) as count from inven_moviecount group by movie_id order by count") # group by로 가져옴.
     algorithm_movie_list = []
-    for movie in movie_list:
-        res = requests.get(f'https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={tmdb_api_key}&language=ko')
-        print(type(res))
+    recommend_range = min(100,len(movie_list)) # 100개까지만 보여준다.
+    for i in range(recommend_range):
+        res = requests.get(f'https://api.themoviedb.org/3/movie/{movie_list[i].movie_id}?api_key={tmdb_api_key}&language=ko')
         data = res.json()
-        needs = ["title",'vote_average','vote_count',"genres","poster_path","release_date","runtime","tagline"]
+        needs = ["id","title",'vote_average','vote_count',"genres","poster_path","release_date","runtime","tagline"]
         dic = {}
-        for i in needs:
-            dic[i] = data[i]
-        a = json.dumps(dic, ensure_ascii=False)
-        algorithm_movie_list.append(a)
+        for j in needs:
+            dic[j] = data[j]
+        # a = json.dumps(dic, ensure_ascii=False)
+        algorithm_movie_list.append(dic)
+        # algorithm_movie_list.append(data)
+        # return Response(data)
     return Response(algorithm_movie_list)
 
-def movie_detail(request):
-    return Response()
+@api_view(['GET', 'POST'])
+def movie_detail(request, movie_pk):
+    # "backdrop_path", "overview", "popularity"
+    list_a = []
+    res = requests.get(f'https://api.themoviedb.org/3/movie/{movie_pk}?api_key={tmdb_api_key}&language=ko')
+    data = res.json()
+    dic = {}
+    needs = ["id","title",'vote_average','vote_count',"genres","poster_path","release_date","runtime","tagline","backdrop_path", "overview", "popularity"]
+    for i in needs:
+        dic[i] = data[i]
+    list_a.append(dic)
+    return Response(list_a)
