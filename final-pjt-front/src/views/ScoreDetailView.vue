@@ -53,6 +53,7 @@ export default {
         .then((res) => {
           if (res.data.comment_set.length !== this.comments.length || this.cnt > 3) {
             this.article = res.data
+            console.log(this.article)
             this.comments = res.data.comment_set
             this.cnt = 0
           } else {

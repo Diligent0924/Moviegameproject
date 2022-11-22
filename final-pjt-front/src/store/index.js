@@ -184,6 +184,18 @@ export default new Vuex.Store({
           context.commit('MAKE_BOSSCARD', res.data)
         })
         .catch(err => { console.log(err) })
+
+      axios({
+        method: 'post',
+        url: `${API_URL}/moviecards/uniquecard_list/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => { console.log(err) })
     },
     pickCard(context, pickedCard) {
       context.commit('PICK_CARD', pickedCard)
@@ -220,7 +232,7 @@ export default new Vuex.Store({
       context.state.finalUserCard.forEach((card) => {
         movie_id.push(card.movieid)
       })
-      
+      console.log(movie_id)
       axios({
         method: 'post',
         url: `${API_URL}/scoreboard/`,
