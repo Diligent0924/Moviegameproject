@@ -22,6 +22,7 @@ class MovieCard(models.Model): # 모델필드를 밖에 빼놓고 사용
 
 class Comment(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
