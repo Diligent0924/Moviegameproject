@@ -1,7 +1,15 @@
 <template>
   <div @click="goToDetail">
-    <span>{{ score.user }} | {{ score.title }} | {{ score.stage }}</span>
-    <hr>
+    <b-list-group-item class="rounded border border-success">
+      <b-container class="bv-example-row">
+        <b-row>
+          <b-col> 등수</b-col>
+          <b-col>{{ score.user }}</b-col>
+          <b-col cols="8">{{ score.title }}</b-col>
+          <b-col>{{ score.stage }}</b-col>
+        </b-row>
+      </b-container>
+    </b-list-group-item>
   </div>
 </template>
 

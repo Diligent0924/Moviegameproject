@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div style="margin-left:20%; margin-right:20%;">
     <h1>
-      스코어 보드
+      Score Board
     </h1>
     <hr>
+    <b-list-group>
     <ScoreBoardItem v-for="(score, index) in scores" :key="index" :score="score" />
-
+    </b-list-group>
   </div>
 </template>
 

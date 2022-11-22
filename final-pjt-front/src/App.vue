@@ -7,7 +7,7 @@
             <img thumbnail rounded fluid src="./assets/SSasstone.png" alt="#" style="width: 50px; height: 50px;">
           </router-link>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <b-button variant="success" v-if="isLogined && notInPlay" @click="logOut">로그 아웃</b-button>
+          <button variant="success" v-if="isLogined && notInPlay" @click="logOut" type="button" class="btn btn-outline-warning">로그 아웃</button>
         </div>
         <div>
           <div class="my-2 mx-3">
