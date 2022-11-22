@@ -1,10 +1,36 @@
 <template>
   <div>
-    <span>남은 카드 수  : {{ copiedDeck.length }}</span>
-    <hr>
-    <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>
-    <b-button :class="{disabled : !inAttack}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
-    <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col cols="2">
+          <ConsoleChat style="float: left; margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
+        </b-col>
+        <b-col cols="8">
+          <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
+        </b-col>
+        <b-col cols="2">
+          <DeadCards style="float: right; margin-right: 50px;" :deadCards="deadCards" />
+        </b-col>
+      </b-row>
+      <b-row style="height:250px;">
+        <InField :fieldCards="inFields" @attack="attack" @goToDie="goToDie" />
+      </b-row>
+
+      <b-row>
+        <b-col>
+          <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>
+          <b-button :class="{disabled : !inAttack}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
+        </b-col>
+      </b-row>
+
+      <b-row style="margin-top:1%;">
+        <b-col>
+          <PlayerArea :userHand="startDeck" @play-card="playCard" />
+        </b-col>
+      </b-row>
+    </b-container>
+
+    <!-- <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
     <ConsoleChat style="float: left; margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
     <div>
       <DeadCards style="float: right; margin-right: 50px;" :deadCards="deadCards" />
@@ -12,9 +38,12 @@
     <div>
       <InField :fieldCards="inFields" @attack="attack" @goToDie="goToDie" />
     </div>
+    <span>남은 카드 수  : {{ copiedDeck.length }}</span>
+    <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>
+    <b-button :class="{disabled : !inAttack}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
     <div>
       <PlayerArea :userHand="startDeck" @play-card="playCard" />
-    </div>
+    </div> -->
   </div>
 </template>
 

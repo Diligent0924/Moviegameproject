@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1>싸희왕 로그인 페이지</h1>
+    <h1 id="login_head">SAFFY Stone</h1>
     <form @submit.prevent="logIn">
       <label for="username">USERNAME &nbsp;&nbsp;</label>
       <input type="text" id="username" v-model="username" class="upload-name"><br>
 
       <label for="password"> PASSWORD &nbsp;&nbsp;</label>
       <input type="password" id="password" v-model="password" class="upload-name"><br>
-
-      <input type="submit" value="logIn">
+      <b-button variant="outline-success" type="submit" value="logIn">로그인</b-button>
+      <!-- <input type="submit" value="logIn"> -->
     </form>
     <b-button block variant="danger" @click="signUp">회원 가입</b-button>
   </div>
@@ -63,4 +63,5 @@ export default {
   margin: 4px 2px;
   cursor: pointer;
   }
+
 </style>

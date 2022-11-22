@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h3>
-      카드를 한 장 골라주세요
-    </h3>
     <div style="display: flex;">
       <CardPackItem
         v-for="(card, index) in cards"

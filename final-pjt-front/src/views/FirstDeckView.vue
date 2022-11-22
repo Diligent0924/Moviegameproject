@@ -1,15 +1,25 @@
 <template>
   <div>
     <h2>
-      최초 덱 구성 페이지
+      탐험을 위한 최초의 덱을 구성하세요!
     </h2>
     <hr>
-    <div style="float: left; margin-left: 100px;">
+    <b-container class="bv-example-row">
+      <b-row class="text-center">
+        <b-col cols="8">
+          <CardPack @count-up="countUpdate" />
+        </b-col>
+        <b-col>
+          <MyDeck/>
+        </b-col>
+      </b-row>
+    </b-container>
+    <!-- <div style="float: left; margin-left: 100px;">
       <CardPack @count-up="countUpdate" />
     </div>
     <div style="float: right; margin-right: 350px;">
       <MyDeck/>
-    </div>
+    </div> -->
     <div>
       <b-button :class="{disabled : cardNum < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
     </div>

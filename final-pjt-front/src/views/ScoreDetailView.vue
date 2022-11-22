@@ -1,15 +1,32 @@
 <template>
   <div>
-    <div>
-      <p>작성자 : {{article.user}}</p>
-      <p>제목 : {{article.title}}</p>
-      <p>스테이지 : {{article.stage}}</p>
+    <b-container class="bv-example-row">
+      <b-row class="text-center">
+        <b-col>
+          <h4>작성자:  {{article.user}}</h4>
+        </b-col>
+        <b-col cols="8">
+          <h4>제목:  {{article.title}} </h4>
+        </b-col>
+        <b-col>
+          <h4>스테이지:  {{article.stage}} </h4>
+        </b-col>
+      </b-row>
+      <b-row>
+        <ScoreDetailItem v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
+        <!-- 여기는 사용한 카드를 넣는 곳 크기를 작게 해서 넣자.-->
+      </b-row>
+      <b-row>
+        <h4>내용 : {{article.content}}</h4>
+      </b-row>
+    </b-container>
+    <!-- <div>
       <div style="display: flex;">
         <ScoreDetailItem v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
       </div>
       <p>내용 : {{article.content}}</p>
-    </div>
-    <hr>
+    </div> -->
+    <!-- <hr> -->
     <div>
       <CommentCreate @add-comment="getArticleDetail" />
     </div>
