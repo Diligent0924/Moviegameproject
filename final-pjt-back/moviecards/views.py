@@ -132,7 +132,7 @@ def plus(request):
     card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
     play_card = [] # 플레이할 카드!
     for data in card:
-        selected = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {data.movieid}) as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s1.movieid = s3.card_id')
+        selected = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {data.movieid}) as s1 join moviecards_{data.movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s2.id = s3.card_id')
         play_card.append(selected[0])
     
     serializer = plusSerializer(play_card, many=True)
