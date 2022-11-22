@@ -70,7 +70,7 @@ def uniquecard_list(request):
             card = Card(movieid=unique_card['id'],movietype='unique')
             card.save()
 
-            uniquecard = UniqueCard(card = card, name=unique_card['name'], posterpath = unique_card['poster_path'], attackdamage = unique_card["attack_damage"], hp = unique_card["hp"])
+            uniquecard = UniqueCard(card = card, name=unique_card['name'], posterpath = str('https://image.tmdb.org/t/p/w500' + unique_card['poster_path']), attackdamage = unique_card["attack_damage"], hp = unique_card["hp"])
             uniquecard.save()
 
             skillcard = UniqueSkill(card=uniquecard, skilltype=unique_card['skill_type'], skillrange=unique_card['skill_range'], skillcomment=unique_card['skill_comment'], skilldescription=unique_card['skill_description'])
