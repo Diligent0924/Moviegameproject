@@ -11,7 +11,7 @@ import PlayingAreaView from '@/views/PlayingAreaView'
 import CoinAreaView from '@/views/CoinAreaView'
 import ScoreDetailView from '@/views/ScoreDetailView'
 import CreateArticleView from '@/views/CreateArticleView'
-
+import InvenDetailView from '@/views/InvenDetailView'
 
 
 Vue.use(VueRouter)
@@ -41,6 +41,11 @@ const routes = [
     path: '/inven',
     name: 'inven',
     component: InvenView,
+  },
+  {
+    path: '/inven/:movieid',
+    name: 'invendetail',
+    component: InvenDetailView,
   },
   {
     path: '/createarticle',

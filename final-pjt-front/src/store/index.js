@@ -30,7 +30,8 @@ export default new Vuex.Store({
     playerHp: 40,
     canGo: true,
     scores: [],
-    inven: []
+    inven: [],
+    invenDetail: null,
   },
   getters: {
     cardNum(state) {
@@ -103,6 +104,12 @@ export default new Vuex.Store({
     },
     GET_SCORE_BOARD(state, scores) {
       state.scores = scores
+    },
+    GET_INVEN(state, payload) {
+      state.inven = payload
+    },
+    GET_INVEN_DETAIL(state, payload) {
+      state.invenDetail = payload
     }
   },
   // ACTIONS
@@ -267,13 +274,26 @@ export default new Vuex.Store({
         .catch((err) => console.log(err));
     },
     getInven(context) {
-      context
       axios({
         method: 'get',
         url: `${API_URL}/inven/`,
       })
         .then((res) => {
           console.log(res)
+          context.commit('GET_INVEN', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getInvenDetail(context, movieId) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/inven/${movieId}/`,
+      })
+        .then((res) => {
+          console.log(res)
+          context.commit('GET_INVEN_DETAIL', res.data)
         })
         .catch((err) => {
           console.log(err)

@@ -1,16 +1,21 @@
 <template>
   <div>
     <h1>
-      InvenView
+      영화 추천 페이지
     </h1>
     <button @click="gameStart">gameStart</button>
-    
+    <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />    
   </div>
 </template>
 
 <script>
+import InvenItem from '@/components/InvenItem'
+
 export default {
   name: 'InvenView',
+  components: {
+      InvenItem
+  },
   methods: {
     gameStart() {
       if (this.isLogined) {
@@ -29,6 +34,9 @@ export default {
       } else {
         return false
       }
+    },
+    movies() {
+      return this.$store.state.inven
     }
   },
   created() {
