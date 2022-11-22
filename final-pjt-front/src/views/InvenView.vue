@@ -1,10 +1,8 @@
 <template>
   <div>
-    <h1>
-      영화 게임 기반 추천 페이지
-    </h1>
-    <button @click="gameStart">gameStart</button>
-    <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />    
+    <p id="name"><b id="h">영화 게임 기반 추천 페이지</b>
+    (만약 추천 알고리즘에 보고 싶은 영화가 없다면 눌러보세요! <b-button pill variant="outline-danger" @click="gameStart">추천받기!</b-button>)</p>
+    <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />  
   </div>
 </template>
 
@@ -46,5 +44,13 @@ export default {
 </script>
 
 <style>
+#name{
+  color: aliceblue;
+  text-align: left;
+  font-size: 20px;
+}
 
+#h{
+  font-size: 40px;
+}
 </style>
