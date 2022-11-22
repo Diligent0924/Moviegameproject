@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>{{card.name}}</p>
-    <img :src="card.posterpath" alt="">
+    <div style="height:50px;"><p>{{card.name}}</p></div>
+    <div><img :src="card.posterpath" alt=""></div>
   </div>
 </template>
 
