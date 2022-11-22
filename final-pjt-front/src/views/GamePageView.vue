@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h1>
-      GamePageView
-    </h1>
-      <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 

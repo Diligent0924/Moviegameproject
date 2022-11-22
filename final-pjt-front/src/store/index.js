@@ -244,6 +244,23 @@ export default new Vuex.Store({
         .catch(error => {
           console.log(error);
         });
+    },
+    commentCreate(context, payload) {
+      // payload['user'] = context.state.username
+      const content = payload.content
+      axios({
+        method: 'post',
+        url: `${API_URL}/scoreboard/${payload.boardId}/comments/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // },
+        data: {content}
+      })
+        .then(() => {
+          context
+          // console.log(res)
+        })
+        .catch((err) => console.log(err));
     }
   },
   modules: {

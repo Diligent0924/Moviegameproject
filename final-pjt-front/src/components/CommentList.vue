@@ -3,9 +3,7 @@
     <h3>
       댓글 폼
     </h3>
-    <CommentItem/>
-    <CommentItem/>
-    <CommentItem/>
+    <CommentItem v-for="(comment, index) in comments" :key="`${comment}${index}`" :comment="comment" />
   </div>
 </template>
 
@@ -16,6 +14,9 @@ export default {
   name: 'CommentList',
   components: {
     CommentItem
+  },
+  props: {
+    comments: Array,
   }
 }
 </script>

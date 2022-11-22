@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>
-      댓글들
+      {{ comment.id }} : {{comment.content}}
     </p>
   </div>
 </template>
@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'CommentItem',
+  props: {
+    comment: Object,
+  }
 }
 </script>
 

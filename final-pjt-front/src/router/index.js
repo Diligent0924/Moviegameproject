@@ -84,18 +84,18 @@ const router = new VueRouter({
 })
 
 // const canOut = ['start', 'playing', 'coin', 'createarticle']
-router.beforeEach(function (to, from, next) {
-  if (window.localStorage.vuex) {
-    const locals = JSON.parse(window.localStorage.vuex)
-    if (locals.canGo) {
-      next()
-    } else{
-      alert('끝까지 플레이 하세요 ^-^')
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach(function (to, from, next) {
+//   if (window.localStorage.vuex) {
+//     const locals = JSON.parse(window.localStorage.vuex)
+//     if (locals.canGo) {
+//       next()
+//     } else{
+//       alert('끝까지 플레이 하세요 ^-^')
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 
 export default router
