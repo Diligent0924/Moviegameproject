@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      영화 추천 페이지
+      영화 게임 기반 추천 페이지
     </h1>
     <button @click="gameStart">gameStart</button>
     <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />    
