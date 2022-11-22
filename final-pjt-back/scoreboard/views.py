@@ -17,7 +17,7 @@ from .serializers import BoardListSerializer,BoardSerializer, CommentSerializer
 from .models import Board, Comment, MovieCard
 from moviecards.models import Card
 from accounts.models import User
-
+from inven.models import Moviecount
 
 @api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])
@@ -40,6 +40,9 @@ def scoreboard_list(request):
             else:
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp, skillcomment=result[0].skillcomment)            
             moviecard.save()
+            # 카드들의 아이디 정보를 INVEN에서 가져간다. => 추천 알고리즘을 위해서 필요함
+            movie_count = Moviecount(movie_id=result[0].movieid)
+            movie_count.save()
 
         # 해당 회원을 그냥 탈퇴시킴
         user = get_object_or_404(User, username = data['user'])
@@ -50,7 +53,6 @@ def scoreboard_list(request):
 @api_view(['GET', 'DELETE'])
 def board_detail(request, board_pk):
     board = get_object_or_404(Board, pk=board_pk)
-    print(board)
     if request.method == 'GET':
         serializer = BoardSerializer(board)
         return Response(serializer.data)
