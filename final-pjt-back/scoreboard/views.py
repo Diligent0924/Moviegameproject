@@ -34,7 +34,7 @@ def scoreboard_list(request):
         # 해당 카드를 세부정보에 표현하는 방식..!
         for movie_id in data["movie_id"]:
             card = Card.objects.raw(f'select * from moviecards_card where movieid = {movie_id}')
-            result = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card[0].movieid} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s1.movieid = s3.card_id')
+            result = Card.objects.raw(f'select * from (select * from moviecards_card where movieid = {card[0].movieid} )as s1 join moviecards_{card[0].movietype}card as s2 on s1.movieid = s2.card_id left join moviecards_uniqueskill as s3 on s2.id = s3.card_id')
             if card[0].movietype == 'normal':
                 moviecard = MovieCard(board=board, movie_id=result[0].movieid, movietype=result[0].movietype, name = result[0].name, posterpath=result[0].posterpath, attackdamage=result[0].attackdamage, hp=result[0].hp)            
             else:

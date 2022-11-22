@@ -12,16 +12,16 @@
         <div>
           <div class="my-2 mx-3">
             <span class="mx-2">
-              <router-link :to="{ name: 'login' }" class="router-link-class" v-if="!isLogined">로그인</router-link> 
+              <router-link :to="{ name: 'login' }" class="router-link-class text-decoration-none" v-if="!isLogined">로그인</router-link> 
             </span>
             <span class="mx-2">
-              <router-link :to="{ name: 'signup' }" class="router-link-class" v-if="!isLogined">회원가입</router-link> 
+              <router-link :to="{ name: 'signup' }" class="router-link-class text-decoration-none" v-if="!isLogined">회원가입</router-link> 
             </span>
             <span class="mx-2">
-              <router-link :to="{ name: 'scoreboard' }" class="router-link-class">랭킹</router-link>
+              <router-link :to="{ name: 'scoreboard' }" class="router-link-class text-decoration-none">랭킹</router-link>
             </span>
             <span class="mx-2">
-              <router-link :to="{ name: 'inven' }" class="router-link-class">인벤</router-link>
+              <router-link :to="{ name: 'inven' }" class="router-link-class text-decoration-none">인벤</router-link>
             </span>
           </div>
         </div>
@@ -84,7 +84,7 @@ nav a.router-link-exact-active {
 }
 
 body {
-    background: linear-gradient(-45deg, #da12bc, #000000, #da12bc, #000000);
+    background: linear-gradient(-45deg, #d6e318, #000000, #d4db0c, #000000);
     background-size: 400% 400%;
     animation: gradient 10s ease infinite;
     height: 100vh;
