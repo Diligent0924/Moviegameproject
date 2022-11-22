@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>싸희왕 로그인 페이지_1</h1>
+    <h1>싸희왕 로그인 페이지</h1>
     <form @submit.prevent="logIn">
       <label for="username">USERNAME &nbsp;&nbsp;</label>
       <input type="text" id="username" v-model="username" class="upload-name"><br>
