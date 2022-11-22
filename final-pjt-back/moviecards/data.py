@@ -11,7 +11,7 @@ boss_info = [{"id":671,"name": '스네이프', "poster_path":'https://w.namu.la/
 unique_list = []
 movie_id_list = [330457,574302,299534,476669,157336,293413,110415,68721,68718,242,220176,372058,568160,11658,18438,773867,619803,518068,282631,396535,496243,200085,437103,567646,385128,158445,72190,209764,107235,79224,51608,47748]
 extra_settings = [
-        {"skill_type": "hill_nuff", "skill_range": -20, "skill_comment": "얼어 붙어라!", "attack_damage" : 0, "hp": 0, "description":"모든 카드에게 데미지를 20씩 줍니다."},
+        {"skill_type": "nuff", "skill_range": 20, "skill_comment": "얼어 붙어라!", "attack_damage" : 0, "hp": 0, "description":"모든 카드에게 데미지를 20씩 줍니다."},
         {"skill_type": "draw", "skill_range": 2, "skill_comment": "나는 밑에서 한장 너는 위에서 한장", "attack_damage": 0, "hp":0, "description": "카드를 두 장 드로우 합니다."},
         {"skill_type": "others", "skill_range": 0, "skill_comment": "나는 필연적 존재이다!", "attack_damage": 0, "hp":0, "description":"자신과 상대방 둘 중 한명의 체력이 반으로 줄어듭니다."},
         {"skill_type": "others", "skill_range": 0, "skill_comment": "Manners makes man", "attack_damage": 0, "hp":0, 'description' : "콘솔창이 존대말로 바뀝니다."},

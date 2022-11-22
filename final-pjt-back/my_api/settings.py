@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # 'articles',
     'moviecards',
     'scoreboard',
+    'inven',
     'rest_framework',
 
     # CORS policy
