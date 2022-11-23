@@ -12,10 +12,17 @@
               <span>개봉일자 : {{movie.release_date}}</span> &nbsp; &nbsp; &nbsp; 장르 :
               <span v-for="(genre, index) in genres" :key="index">{{genre}} &nbsp;</span>
             </p>
-            <p>평점 : {{movie.vote_average}}</p>
+            <p>평점 : {{vote_average}}</p>
           </b-row>
           <b-row>
-            <p>{{movie.overview}}</p>
+            <p>{{overview}}</p>
+          </b-row>
+          <b-row>
+            <a :href="`https://www.themoviedb.org/movie/${movie.id}?language=ko`">
+              <b-button variant="outline-primary">
+                추가적인 영화정보를 얻고 싶다면 눌러보세요!
+              </b-button>
+              </a>
           </b-row>
         </b-col>
       </b-row>
@@ -45,6 +52,12 @@ export default {
     },
     backdroppath() {
       return 'https://image.tmdb.org/t/p/original'+this.movie.backdrop_path
+    },
+    vote_average(){
+      return this.movie.vote_average === 0 ?  "이 영화는 개봉예정작이므로 평점이 없습니다.": this.movie.vote_average
+    },
+    overview(){
+      return this.movie.overview.length === 0 ? "이 영화는 안타깝게도 개요가 없습니다.." : this.movie.overview
     }
   }
 }
