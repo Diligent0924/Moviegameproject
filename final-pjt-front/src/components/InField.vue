@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; justify-content: center;">
-    <InFieldItem v-for="(fieldCard, index) in fieldCards" :key="index" :fieldCard="fieldCard"
+    <InFieldItem v-for="(fieldCard, index) in fieldCards" :key="index" :fieldCard="fieldCard" :onTarget="onTarget" @pickTarget="pickTarget"
       @attack="attack" @goToDie="goToDie" style="margin-left:15px; margin-right:15px;"
     />
   </div>
@@ -16,6 +16,7 @@ export default {
   },
   props: {
     fieldCards: Array,
+    onTarget: Boolean,
   },
   methods: {
     attack(attackFrom) {
@@ -23,6 +24,9 @@ export default {
     },
     goToDie(card) {
       this.$emit('goToDie', card)
+    },
+    pickTarget(card) {
+      this.$emit('pickTarget', card)
     }
   }
 }
