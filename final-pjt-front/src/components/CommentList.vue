@@ -4,8 +4,8 @@
       <b-list-group-item>
         <b-row class="text-center">
           <b-col cols="2" class="ms-2">작성자</b-col>
-          <b-col cols="7" style="text-start">내용</b-col>
-          <b-col cols="2">생성일자</b-col>
+          <b-col cols="7" class="text-start">내용</b-col>
+          <b-col cols="2" style="margin-left:70px;">생성일자</b-col>
         </b-row>
         <hr>
         <CommentItem v-for="(comment, index) in comments" :key="`${comment}${index}`" :comment="comment" />

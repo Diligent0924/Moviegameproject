@@ -24,7 +24,7 @@
 
       <b-row>
         <b-col>
-          <ConsoleChat style="float: left; margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
+          <ConsoleChat style="margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
         </b-col>
       </b-row>
 
@@ -117,7 +117,7 @@ export default {
         // 턴 회복
         this.playCardCount = 2
         // 카드 드로우
-        this.darwCard()
+        this.drawCard()
         // 보스 공격
         if (this.isFreezed) {
           this.isFreezed = false
@@ -145,8 +145,8 @@ export default {
               this.realPlay(card)
               this.goToDie(card)
             } else if (card.skillcomment === '나는 밑에서 한장 너는 위에서 한장') {
-              this.darwCard()
-              this.darwCard()
+              this.drawCard()
+              this.drawCard()
               this.realPlay(card)
               this.goToDie(card)
             } else if (card.skillcomment === '나는 필연적 존재이다!') {
@@ -243,21 +243,21 @@ export default {
             } else if (card.skillcomment === '이 사람들 빨리 내보내야돼. 안 그러면 우리까지 위험해져') {
               this.realPlay(card)
               this.goToDie(card)
-              this.darwCard()
-              this.darwCard()
-              this.darwCard()
+              this.drawCard()
+              this.drawCard()
+              this.drawCard()
             } else if (card.skillcomment === '착해서 돈이 많은 게 아니라 돈이 많으니까 착한 거야') {
               this.realPlay(card)
               this.goToDie(card)
-              this.darwCard()
-              this.darwCard()
-              this.darwCard()
+              this.drawCard()
+              this.drawCard()
+              this.drawCard()
             } else if (card.skillcomment === '경찰이 고문해서 대학생이 죽었는데, 보도지침이 대수야?') {
               this.realPlay(card)
               this.goToDie(card)
-              this.darwCard()
-              this.darwCard()
-              this.darwCard()
+              this.drawCard()
+              this.drawCard()
+              this.drawCard()
             } else if (card.skillcomment === '왕갈비통닭 한마리요~') {
               // 하수인을 선택합니다. 체력이 +40 증가합니다.
               this.setTarget(card)
@@ -272,9 +272,9 @@ export default {
             } else if (card.skillcomment === '나 지금 이거 일생일대 기횐 거 같애') {
               this.realPlay(card)
               this.goToDie(card)
-              this.darwCard()
-              this.darwCard()
-              this.darwCard()
+              this.drawCard()
+              this.drawCard()
+              this.drawCard()
             } else if (card.skillcomment === '비벼~ 막비벼~') {
               // 하수인을 선택합니다. 해당 하수인의 양 옆의 체력이 +10 증가합니다.
               this.setTarget(card)

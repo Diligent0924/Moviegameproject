@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     name() {
-      return this.fieldCard.name.length > 15 ? this.fieldCard.name.slice(0,20) : this.fieldCard.name
+      return this.fieldCard.name.length > 15 ? this.fieldCard.name.slice(0,15) : this.fieldCard.name
     }
   }
 }
