@@ -2,16 +2,20 @@
   <b-list-group-item>
   <b-container class="bv-example-row">
     <b-row class="text-start bg-primary border border-dark rounded" v-if="card.movietype==='unique'">
-      <b-col>{{card.movietype}}</b-col>
-      <b-col cols="6">{{card.name}}</b-col>
-      <b-col v-if="card.hp">Minion</b-col>
-      <b-col v-else>Skill</b-col>
+      <b-col cols="2">{{card.movietype}}</b-col>
+      <b-col cols="5">{{card.name}}</b-col>
+      <b-col cols="2" v-if="card.hp">Minion</b-col>
+      <b-col cols="4" v-else>Skill</b-col>
+      <b-col cols="1" v-if="card.hp">{{card.attackdamage}}</b-col>
+      <b-col cols="1" v-if="card.hp">{{card.hp}}</b-col>
     </b-row>
     
     <b-row class="text-start rounded border border-dark" v-else>
-      <b-col>{{card.movietype}}</b-col>
-      <b-col cols="6">{{card.name}}</b-col>
-      <b-col>Minion</b-col>
+      <b-col cols="2">{{card.movietype}}</b-col>
+      <b-col cols="5">{{card.name}}</b-col>
+      <b-col cols="2">Minion</b-col>
+      <b-col cols="1">{{card.attackdamage}}</b-col>
+      <b-col cols="1">{{card.hp}}</b-col>
     </b-row>
   </b-container>
   </b-list-group-item>
