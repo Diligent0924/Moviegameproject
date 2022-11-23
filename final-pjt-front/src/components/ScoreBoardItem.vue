@@ -1,6 +1,6 @@
 <template>
   <div @click="goToDetail">
-    <b-list-group-item class="rounded border border-success">
+    <b-list-group-item class="rounded">
       <b-container class="bv-example-row">
         <b-row>
           <b-col> 등수</b-col>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="height:50px;"><p>{{card.name}}</p></div>
-    <div><img :src="card.posterpath" alt=""></div>
+    <!-- <div style="height:50px;"><p>{{card.name}}</p></div> -->
+    <img :src="card.posterpath" alt="">
   </div>
 </template>
 

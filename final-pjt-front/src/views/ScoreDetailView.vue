@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-5">
     <b-container class="bv-example-row">
       <b-row class="text-center">
         <b-col>
@@ -13,27 +13,25 @@
         </b-col>
       </b-row>
       <b-row>
-        <ScoreDetailItem v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
+        <div class="hover-container g-4">
+          <ScoreDetailItem class="item" v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
+        </div>
         <!-- 여기는 사용한 카드를 넣는 곳 크기를 작게 해서 넣자.-->
       </b-row>
       <b-row>
         <h4>내용 : {{article.content}}</h4>
       </b-row>
+      <b-row>
+        <b-col cols="3"></b-col>
+        <b-col cols="6"><CommentCreate @add-comment="getArticleDetail" /></b-col>
+        <b-col cols="3"></b-col>
+      </b-row>
+      <b-row>
+        <b-col coles="2"></b-col>
+        <b-col coles="8"><CommentList :comments="comments" /></b-col>
+        <b-col coles="2"></b-col>
+      </b-row>
     </b-container>
-    <!-- <div>
-      <div style="display: flex;">
-        <ScoreDetailItem v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
-      </div>
-      <p>내용 : {{article.content}}</p>
-    </div> -->
-    <!-- <hr> -->
-    <div>
-      <CommentCreate @add-comment="getArticleDetail" />
-    </div>
-    <hr>
-    <div>
-      <CommentList :comments="comments" />
-    </div>
   </div>
 </template>
 
@@ -83,3 +81,40 @@ export default {
   },
 }
 </script>
+
+<style>
+.hover-container {
+  display: flex;
+  padding: 0;
+}
+
+.item {
+  position: relative;
+  display: block;
+  flex: 1 1 0px;
+  transition: transform 500ms;
+}
+
+.hover-container:focus-within .item,
+.hover-container:hover .item {
+  transform: translateX(-25%);
+}
+
+.item:focus ~ .item,
+.item:hover ~ .item {
+  transform: translateX(25%);
+}
+
+.hover-container .item:focus,
+.hover-container .item:hover {
+  transform: scale(1.5);
+  z-index: 1;
+}
+
+.item img {
+  display: block;
+  max-width: 100%;
+}
+
+
+</style>
