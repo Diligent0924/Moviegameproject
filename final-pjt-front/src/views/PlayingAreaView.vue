@@ -79,6 +79,7 @@ export default {
       inAttack: false,
       cardIndex : null,
       playerHp: 40,
+      isFreezed: false,
     }
   },
   created() {
@@ -96,6 +97,14 @@ export default {
         this.copiedDeck.splice(index, 1)
       })
     },
+    drawCard() {
+      if (this.copiedDeck.length > 0) {
+        let drawCard = _.sample(this.copiedDeck)
+        const index = this.copiedDeck.indexOf(drawCard)
+        this.copiedDeck.splice(index, 1)
+        this.startDeck.push(drawCard)
+      }
+    },
     endTurn() {
       this.isPlayerTurn = !this.isPlayerTurn
       this.battleLog = null
@@ -105,14 +114,13 @@ export default {
         // 턴 회복
         this.playCardCount = 2
         // 카드 드로우
-        if (this.copiedDeck.length > 0) {
-          let drawCard = _.sample(this.copiedDeck)
-          const index = this.copiedDeck.indexOf(drawCard)
-          this.copiedDeck.splice(index, 1)
-          this.startDeck.push(drawCard)
-        }
+        this.darwCard()
         // 보스 공격
-        this.bossAttack()
+        if (this.isFreezed) {
+          this.isFreezed = false
+        } else {
+          this.bossAttack()
+        }
 
         this.inFields.forEach((aCard) => {
           aCard['canAttack'] = true
@@ -128,6 +136,147 @@ export default {
         newCard['canAttack'] = false
         this.inFields.push(newCard)
         this.playCardCount--
+
+        if (card.movietype === 'unique') {
+          this.battleLog = card.skillcomment
+          if (card.hp === 0) {
+            // 주문
+            if (card.skillcomment === '얼어 붙어라!') {
+              // 보스에게 20의 피해를 주고 빙결 상태로 만듭니다.
+              this.boss.hp -= card.skillrange
+              this.isFreezed = true
+            } else if (card.skillcomment === '나는 밑에서 한장 너는 위에서 한장') {
+              this.darwCard()
+              this.darwCard()
+            } else if (card.skillcomment === '나는 필연적 존재이다!') {
+              // 플레이어와 보스 중 한명의 체력이 반으로 줄어듭니다.
+              let whodie = _.sample(_.range(2))
+              if (whodie) {
+                const newhp = Math.floor(this.boss.hp / 2);
+                this.boss.hp = newhp;
+              } else {
+                const newhp = Math.floor(this.playerHp / 2);
+                this.playerHp = newhp;
+              }
+            } else if (card.skillcomment === 'Manners maketh man') {
+              // 뭐하지??
+            } else if (card.skillcomment === 'We will find a way. we always have.') {
+              // 모든 아군 체력 10 증가
+              this.inFields.forEach((inField) => {
+                inField.hp += card.skillrange
+              })
+            } else if (card.skillcomment === '프로틴-바') {
+              // 플레이어의 체력이 30 증가합니다.
+              this.playerHp += card.skillrange
+            } else if (card.skillcomment === 'I am Iron man') {
+              // 모든 하수인의 공격력이 + 10이 됩니다.
+              this.inFields.forEach((inField) => {
+                inField.attackdamage += card.skillrange
+              })
+            } else if (card.skillcomment === '친구는 가까이 두고, 적은 더 가까이 두어야 한다.') {
+              // 적이 한턴 공격을 쉽니다.
+              this.isFreezed = true
+            } else if (card.skillcomment === '내가 왕이 될 상인가') {
+              // 하수인을 선택합니다. 공격력 60 or 공격력 1이 됩니다.
+            } else if (card.skillcomment === '키미노 나마에와') {
+              // 하수인을 선택합니다. 이번턴 적 챔피언과 공격력이 바뀝니다.
+              // 이름도 바꿉니다.
+            } else if (card.skillcomment === '하지만, 내가 돌아가면, 다시 날씨가..!') {
+              // 필드가 바뀝니다. 보스의 공격력이 5만큼 감소합니다.
+              this.boss.attackdamage -= card.skillrange
+            } else if (card.skillcomment === '넌 내 꿈이구 어머니 희망이야. 어서 가.') {
+              // 하수인을 선택합니다. 해당 하수인이 손으로 돌아갑니다. 필드 하수인들의 체력이 +10이 됩니다.
+            } else if (card.skillcomment === '아무도 없으면 외롭지 않으니까요.') {
+              // 필드에 아무것도 없다면 50/50짜리 김씨를 소환합니다.
+              if (!this.inFields.length) {
+                // 김씨 소환
+                const KimSsi = {
+                  'attackdamage': 50,
+                  'hp': 50,
+                  'movietype': 'normal',
+                  'posterpath': card.posterpath,
+                  'skillcomment': null,
+                  'skillrange': null,
+                  'skilltype': null,
+                  'canAttack': false
+                }
+                this.inFields.push(KimSsi)
+              }
+            } else if (card.skillcomment === '우린 노빠꾸다!') {
+              // 하수인을 선택합니다. 하수인의 공격력이 40, 체력이 1이 됩니다.
+            } else if (card.skillcomment === '지나간 일에 새로운 눈물을 낭비하지 말자') {
+              // 모든 하수인이 +20 회복됩니다.
+              this.inFields.forEach((inField) => {
+                inField.hp += card.skillrange
+              })
+            } else if (card.skillcomment === '신에게는 아직 12척의 배가 남아있습니다') {
+              // 모든 하수인의 공격력이 +10 증가합니다.
+              this.inFields.forEach((inField) => {
+                inField.attackdamage += card.skillrange
+              })
+            } else if (card.skillcomment === '이 사람들 빨리 내보내야돼. 안 그러면 우리까지 위험해져') {
+              this.darwCard()
+              this.darwCard()
+              this.darwCard()
+            } else if (card.skillcomment === '착해서 돈이 많은 게 아니라 돈이 많으니까 착한 거야') {
+              this.darwCard()
+              this.darwCard()
+              this.darwCard()
+            } else if (card.skillcomment === '경찰이 고문해서 대학생이 죽었는데, 보도지침이 대수야?') {
+              this.darwCard()
+              this.darwCard()
+              this.darwCard()
+            } else if (card.skillcomment === '왕갈비통닭 한마리요~') {
+              // 하수인 또는 캐릭터를 선택합니다. 체력이 +40 증가합니다.
+            } else if (card.skillcomment === '작별인사는 하고 가야지') {
+              // 하수인을 선택합니다. 이번턴 하수인의 공격력이 +40 증가합니다.
+            } else if (card.skillcomment === '아빠 딸로 태어나줘서 고맙습니다.') {
+              // 내 캐릭터의 체력이 +40 증가합니다.
+              this.playerHp += card.skillrange
+            } else if (card.skillcomment === '나 지금 이거 일생일대 기횐 거 같애') {
+              this.darwCard()
+              this.darwCard()
+              this.darwCard()
+            } else if (card.skillcomment === '비벼~ 막비벼~') {
+              // 하수인을 선택합니다. 해당 하수인의 양 옆의 체력이 +10 증가합니다.
+            } else if (card.skillcomment === '두려움은 직시하면 그 뿐. 바람은 계산하는 것이 아니라 극복하는 것이다.') {
+              // 보스의 체력이 30 이하라면 즉사합니다. 아니라면 10의 데미지를 줍니다.
+              if (this.boss.hp <= 30) {
+                this.boss.hp -= 100000
+              } else {
+                this.boss.hp -= 10
+              }
+            } else if (card.skillcomment === '내일을 사는 놈은 오늘만 사는 놈을 못이긴다.') {
+              // 하수인을 선택합니다. 해당 하수인의 공격력이 +40 증가합니다. 이번턴에 사망합니다.
+            }
+            this.goToDie(card)
+          } else {
+            // 토템
+            if (card.skillcomment === '대중들은 개,돼지 입니다. 적당히 짖어대다 알아서 조용해질 겁니다.') {
+              // 자신을 제외한 모든 유닛의 체력이 10이 됩니다.
+              this.inFields.forEach((inField) => {
+                if (inField !== card) {
+                  inField.hp = 10
+                }
+              })
+            } else if (card.skillcomment === '백엔드의 신') {
+              // 쟝-고
+            } else if (card.skillcomment === '누가 50이야?') {
+              // 그냥 강합니다.
+            } else if (card.skillcomment === '이런 고병원성 바이러스에 늑장 대응하다가 구제역 사태처럼 전국으로 퍼지기라도 한다면 큰일입니다') {
+              // 다른 모든 하수인의 체력이 10 감소합니다.
+              this.inFields.forEach((inField) => {
+                inField.hp -= card.skillrange
+              })
+            } else if (card.skillcomment === '사람은 어떤 일이 터진 후에야 후회해. 이건 인간이 멍하거나 나약해서가 아니라. 본능 때문이야') {
+              // 필드의 모든 하수인을 파괴합니다.
+              this.inFields = []
+              this.inFields.push(newCard)
+            } else if (card.skillcomment === '음 머~') {
+              // 이 소를 죽이지 말아주세요...
+            }
+          }
+        }
       } else {
         alert('이미 두 장의 카드를 내려놓았습니다.\n 필드의 유닛을 클릭해 공격하거나 턴 종료 버튼을 눌러주세요.')
       }
@@ -278,10 +427,5 @@ export default {
 </script>
 
 <style>
-  /* .downside {
-    position: fixed;
-    bottom: 60px;
-    width: 100%;
-  } */
 
 </style>
