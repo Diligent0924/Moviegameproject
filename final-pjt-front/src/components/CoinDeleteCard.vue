@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h3>카드 삭제</h3>
-    <div style="display: flex;">
+    <h1 class="text-danger my-5">카드 삭제</h1>
+    <div class="row row-cols-1 row-cols-md-6 g-4">
       <CoinDeleteCardItem v-for="(card, index) in cards" :key="index" :card="card" @coinMinus="coinMinus" :coinLeft="coinLeft" :isOpened="isOpened" />    
+    </div>
+    <div style="display: flex;">
     </div>
   </div>
 </template>

@@ -3,9 +3,9 @@
     <p style="border-bottom:20px" :class="{'unique-card-color' : isUnique }" ><b>{{ card.name }}</b></p>
     <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
     <hr>
-    <p v-if="!isSepll">공격력 : {{ card.attackdamage }}</p>
-    <p>{{ hp }}</p>
-    <p v-if="isUnique"><b>{{ skillType }}</b></p>
+    <p v-if="!isSepll" class="text-danger"><b> AD : {{ card.attackdamage }} </b></p>
+    <p class="text-success"><b>{{ hp }}</b></p>
+    <p v-if="isUnique" class="text-primary"><b>{{ skillType }}</b></p>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
       return this.$store.getters.cardNum
     },
     hp() {
-      return this.card.hp ? `생명력 : ${this.card.hp}` : '주문 카드'
+      return this.card.hp ? `HP : ${this.card.hp}` : '주문 카드'
     },
     isSepll() {
       return this.hp === '주문 카드' ? true : false
@@ -60,6 +60,6 @@ export default {
     height: 400px;
   }
   .unique-card-color {
-    color: crimson;
+    color: gold;
   }
 </style>
