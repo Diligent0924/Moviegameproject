@@ -1,5 +1,5 @@
 <template>
-  <div @click="attack" :class="{ 'can-attack' : fieldCard.canAttack }">
+  <div @click="attack" :class="{ 'can-attack' : fieldCard.canAttack || onTarget }">
     <b-card bg-variant="default" text-variant="black" :header="name" class="text-center;" style="width:250px;">
       <img :src="fieldCard.posterpath" alt="" style="width: 100px; height: 100px;" >
       <b-card-text>
@@ -15,9 +15,15 @@ export default {
   name: 'InFieldItem',
   props: {
     fieldCard: Object,
+    onTarget: Boolean,
   },
   methods: {
     attack() {
+      if (this.onTarget) {
+        this.$emit('pickTarget', this.fieldCard)
+        return
+      }
+
       if (this.fieldCard.canAttack) {
         this.$emit('attack', this.fieldCard)
       } else {
