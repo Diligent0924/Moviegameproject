@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="mx-5 mt-4">
     <p id="name"><b id="h">영화 게임 기반 추천 페이지</b>
     (만약 추천 알고리즘에 보고 싶은 영화가 없다면 눌러보세요! <b-button pill variant="outline-danger" @click="gameStart">추천받기!</b-button>)</p>
-    <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />  
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <InvenItem v-for="movie in movies" :key="`${movie.id}`" :movie="movie" />  
+    </div>
   </div>
 </template>
 

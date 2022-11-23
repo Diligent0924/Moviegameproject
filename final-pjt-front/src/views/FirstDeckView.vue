@@ -5,12 +5,18 @@
     </h2>
     <hr>
     <b-container class="bv-example-row">
-      <b-row class="text-center">
+      <b-row class="text-center" style="height:700px;">
         <b-col cols="8">
           <CardPack @count-up="countUpdate" />
         </b-col>
         <b-col>
           <MyDeck/>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col>
+          <b-button :class="{disabled : cardNum < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -20,9 +26,6 @@
     <div style="float: right; margin-right: 350px;">
       <MyDeck/>
     </div> -->
-    <div>
-      <b-button :class="{disabled : cardNum < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
-    </div>
   </div>
 </template>
 

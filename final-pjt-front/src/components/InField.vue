@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; justify-content: center;">
     <InFieldItem v-for="(fieldCard, index) in fieldCards" :key="index" :fieldCard="fieldCard"
-      @attack="attack" @goToDie="goToDie"
+      @attack="attack" @goToDie="goToDie" style="margin-left:15px; margin-right:15px;"
     />
   </div>
 </template>

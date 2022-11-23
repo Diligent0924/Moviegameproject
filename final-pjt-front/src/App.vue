@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <div id="whole">
-      <nav class="navbar navbar-light justify-content-between mb-5">
-        <div>
+    <!-- <div id="whole"> -->
+      <nav class="navbar navbar-light justify-content-between" style="background-color:#FFFAFA">
+        <div class="mx-5">
           <router-link :to="{ name: 'inven' }" class="router-link-class">
             <img thumbnail rounded fluid src="./assets/SSasstone.png" alt="#" style="width: 50px; height: 50px;">
           </router-link>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <button variant="success" v-if="isLogined && notInPlay" @click="logOut" type="button" class="btn btn-outline-warning">로그 아웃</button>
         </div>
-        <div>
+        <div class="mx-5">
           <div class="my-2 mx-3">
             <span class="mx-2">
               <router-link :to="{ name: 'login' }" class="router-link-class text-decoration-none" v-if="!isLogined">로그인</router-link> 
@@ -27,7 +27,7 @@
         </div>
       </nav>
       <router-view/>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -64,8 +64,8 @@ export default {
 }
 
 #whole{
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 nav {
   padding: 30px;

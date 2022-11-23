@@ -8,7 +8,9 @@
         style="margin-left: 20px; margin-right: 20px;"
       />
     </div>
-    <b-button :class="{disabled : cardNum}" variant="outline-primary" @click="openCard">카드 오픈!</b-button>
+    <div>
+      <b-button :class="{disabled : cardNum}" variant="outline-primary" @click="openCard">카드 오픈!</b-button>
+    </div>
   </div>
 </template>
 

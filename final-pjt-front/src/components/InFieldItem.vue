@@ -1,10 +1,13 @@
 <template>
   <div @click="attack" :class="{ 'can-attack' : fieldCard.canAttack }">
-    <b-card bg-variant="info" text-variant="white" :header="fieldCard.name" class="text-center">
-      <img :src="fieldCard.posterpath" alt="" style="width: 80px; height: 120px;" >
-      <b-card-text><span style="">{{ fieldCard.attackdamage }}</span> / <span>{{ fieldCard.hp }}</span></b-card-text>
+    <b-card bg-variant="default" text-variant="black" :header="name" class="text-center;" style="width:250px;">
+      <img :src="fieldCard.posterpath" alt="" style="width: 100px; height: 100px;" >
+      <b-card-text>
+        <span style="color:crimson;"><b>AD {{ fieldCard.attackdamage }}</b></span>  &nbsp;
+        <span style="color:green;"><b>HP {{ fieldCard.hp }}</b></span>
+      </b-card-text>
     </b-card>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -27,6 +30,11 @@ export default {
       if (nowHp <= 0) {
         this.$emit('goToDie', this.fieldCard)
       }
+    }
+  },
+  computed: {
+    name() {
+      return this.fieldCard.name.length > 15 ? this.fieldCard.name.slice(0,20) : this.fieldCard.name
     }
   }
 }
