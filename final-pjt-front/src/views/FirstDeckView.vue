@@ -1,7 +1,8 @@
 <template>
   <div class="my-5">
     <h2>
-      탐험을 위한 최초의 덱을 구성하세요!
+      탐험을 위한 최초의 덱을 구성하세요! 
+      <b-button :class="{disabled : cardNum < 10}" block variant="outline-danger" @click="goToDengeon">탐험 시작!</b-button>
     </h2>
     <hr>
     <b-container class="bv-example-row">
@@ -13,19 +14,7 @@
           <MyDeck/>
         </b-col>
       </b-row>
-
-      <b-row>
-        <b-col>
-          <b-button :class="{disabled : cardNum < 10}" block variant="danger" @click="goToDengeon">탐험 시작!</b-button>
-        </b-col>
-      </b-row>
     </b-container>
-    <!-- <div style="float: left; margin-left: 100px;">
-      <CardPack @count-up="countUpdate" />
-    </div>
-    <div style="float: right; margin-right: 350px;">
-      <MyDeck/>
-    </div> -->
   </div>
 </template>
 

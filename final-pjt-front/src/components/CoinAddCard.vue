@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3>
+    <h1 class="my-5 text-success">
       카드 추가
-    </h3>
+    </h1>
     <div style="display: flex;">
       <CoinAddCardItem
         v-for="(card, index) in cards"

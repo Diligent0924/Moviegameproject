@@ -14,19 +14,11 @@
       <b-col cols="2">{{card.movietype}}</b-col>
       <b-col cols="5">{{card.name}}</b-col>
       <b-col cols="2">Minion</b-col>
-      <b-col cols="1">{{card.attackdamage}}</b-col>
+      <b-col cols="1" class="text-center">{{card.attackdamage}}</b-col>
       <b-col cols="1">{{card.hp}}</b-col>
     </b-row>
   </b-container>
   </b-list-group-item>
-  <!-- <div>
-    <p>{{card}}</p>
-    <p>{{card.name}}</p>
-    <p>{{card.hp}}</p>
-    <p v-if="card.hp">sss</p>
-    <p v-else>스킬</p>
-    <img :src="card.posterpath" alt="#" style="width: 150px; height: 200px;" @click="cardStat">
-  </div> -->
 </template>
 
 <script>
