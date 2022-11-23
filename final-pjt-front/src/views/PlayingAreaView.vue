@@ -18,7 +18,7 @@
       <b-row>
         <b-col>
           <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>
-          <b-button :class="{disabled : !inAttack || !onTarget}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
+          <b-button :class="{disabled : !inAttack && !onTarget}" block variant="warning" @click="cancelAttack">취소</b-button>
           <b-button block variant="warning" @click="lose">항복</b-button>
         </b-col>
       </b-row>
@@ -84,12 +84,16 @@ export default {
       this.bossLevel = this.$store.state.bossLevel
       this.playerHp = this.$store.state.playerHp
       this.boss = _.cloneDeep(this.$store.state.bossCards[this.bossLevel])
-      this.copiedDeck = _.cloneDeep(this.$store.state.userCards)
+      this.copiedDeck = _.cloneDeep(this.$store.state.userCards).map((card) => {
+        card.canAttack = false
+        return card
+      })
       this.startDeck = _.sampleSize(this.copiedDeck, 5)
       this.startDeck.forEach((aCard) => {
         const index = this.copiedDeck.indexOf(aCard)
         this.copiedDeck.splice(index, 1)
       })
+      this.boss.attackdamage = 1
     },
     drawCard() {
       if (this.copiedDeck.length > 0) {
@@ -127,7 +131,7 @@ export default {
         }
 
         this.inFields.forEach((aCard) => {
-          aCard['canAttack'] = true
+          aCard.canAttack = true
         })
         this.isPlayerTurn = !this.isPlayerTurn
       }, 1500)
@@ -299,7 +303,9 @@ export default {
               this.realPlay(card)
             } else if (card.skillcomment === '사람은 어떤 일이 터진 후에야 후회해. 이건 인간이 멍하거나 나약해서가 아니라. 본능 때문이야') {
               // 필드의 모든 하수인을 파괴합니다.
-              this.inFields = []
+              this.inFields.forEach((inField) => {
+                this.goToDie(inField)
+              })
               this.realPlay(card)
             } else if (card.skillcomment === '음 머~') {
               // 이 소를 죽이지 말아주세요...
@@ -307,6 +313,7 @@ export default {
             }
           }
         } else if (this.inFields.length < 7) {
+          // 일반 카드
           this.realPlay(card)
         } else{
           alert('필드의 최대 장수는 7장 입니다.')
@@ -387,7 +394,8 @@ export default {
       if (this.inAttack) {
         this.inAttack = false
         this.battleLog = '공격을 취소하였습니다. \n다음 행동을 선택해주세요'
-      } else if (this.onTarget) {
+      }
+      if (this.onTarget) {
         this.onTarget = false
         this.battleLog = '특수 행동을 취소하였습니다. \n다음 행동을 선택해주세요.'
       }
@@ -423,8 +431,8 @@ export default {
           this.playerHp -= this.boss.attackdamage
           this.battleLog = `${this.boss.name}가 플레이어에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         } else {
-          this.inFields[atkNum-1].hp -= this.boss.attackdamage
-          this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum-1].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
+          this.inFields[atkNum].hp -= this.boss.attackdamage
+          this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         }
         setTimeout(() => {
           this.battleLog = '손패를 클릭해 내려놓거나, 필드의 유닛을 클릭해 공격하세요'
@@ -513,7 +521,7 @@ export default {
       const index = this.startDeck.indexOf(card)
       this.startDeck.splice(index, 1)
       let newCard = card
-      newCard['canAttack'] = false
+      newCard.canAttack = false
       this.inFields.push(newCard)
       this.playCardCount--
     },
