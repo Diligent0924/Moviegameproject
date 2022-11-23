@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div class="my-3">
-      <p style="color: crimson; border-bottom:20px"><b>{{ card.name }}</b></p>
-    </div>
-    <div>
-      <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
-    </div>
+    <p style="border-bottom:20px" :class="{'unique-card-color' : isUnique }" ><b>{{ card.name }}</b></p>
+    <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
     <hr>
     <p v-if="!isSepll">공격력 : {{ card.attackdamage }}</p>
     <p>{{ hp }}</p>
@@ -18,14 +14,11 @@ export default {
   name: 'CardPackItem',
   props: {
     card: Object,
+    firstClick: Boolean,
   },
   computed: {
     skillType() {
-      if (this.card.skilltype) {
-        return this.card.skillcomment
-      } else {
-        return 'Not Found'
-      }
+      return this.card.skilltype ? this.card.skillcomment : 'Not Found'
     },
     cardNum() {
       return this.$store.getters.cardNum
@@ -38,23 +31,25 @@ export default {
     },
     isUnique() {
       return this.card.movietype === 'unique' ? true : false
-    }
+    },
   },
   methods: {
-   pickCard() {
-     if (this.cardNum >= 10) {
-       alert('이미 10장의 카드를 선택하였습니다.')
-     } else if (this.card.name === '카드명') {
-       alert('카드 오픈 버튼을 눌러주세요.')
-     } else {
-         this.$store.dispatch('pickCard', this.card)
+    pickCard() {
+      if (this.firstClick) {
+        this.$store.dispatch('openCard')
+        this.$emit('afterFirst')
+      } else if (this.cardNum >= 10) {
+        alert('이미 10장의 카드를 선택하였습니다.')
+      } else {
+        this.$store.dispatch('pickCard', this.card)
+        console.log('111')
       
-         if (this.cardNum < 10) {
-           this.$store.dispatch('openCard')
-         }
-       }
-     }
-   },
+        if (this.cardNum < 10) {
+          this.$store.dispatch('openCard')
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -62,5 +57,8 @@ export default {
   img {
     width: 300px;
     height: 400px;
+  }
+  .unique-card-color {
+    color: crimson;
   }
 </style>
