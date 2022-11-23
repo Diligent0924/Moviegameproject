@@ -1,7 +1,11 @@
 <template>
   <div>
-    <p style="color: crimson; border-bottom:20px"><b>{{ card.name }}</b></p>
-    <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
+    <div class="my-3">
+      <p style="color: crimson; border-bottom:20px"><b>{{ card.name }}</b></p>
+    </div>
+    <div>
+      <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
+    </div>
     <hr>
     <p v-if="!isSepll">공격력 : {{ card.attackdamage }}</p>
     <p>{{ hp }}</p>

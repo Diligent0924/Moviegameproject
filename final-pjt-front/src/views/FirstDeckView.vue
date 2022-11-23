@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-5">
     <h2>
       탐험을 위한 최초의 덱을 구성하세요!
     </h2>

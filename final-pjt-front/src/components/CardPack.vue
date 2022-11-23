@@ -5,7 +5,7 @@
         v-for="(card, index) in cards"
         :key="`${index}-${card}`"
         :card=card
-        style="margin-left: 20px; margin-right: 20px;"
+        style="margin-left: 10px; margin-right: 10px;"
       />
     </div>
     <div>

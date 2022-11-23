@@ -3,13 +3,20 @@
     <h3>
       My Deck
     </h3>
-    <div style="display: flex;">
+    <b-list-group-item>
       <MyCard
        v-for="(card, index) in userCards"
        :key="`${card.id}-${index}`"
        :card="card"
       />
-    </div>
+    </b-list-group-item>
+    <!-- <div>
+      <MyCard
+       v-for="(card, index) in userCards"
+       :key="`${card.id}-${index}`"
+       :card="card"
+      />
+    </div> -->
   </div>
 </template>
 
