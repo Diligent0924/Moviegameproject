@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     name() {
-      return this.card.name.length > 15 ? this.card.name.slice(0,20) : this.card.name
+      return this.card.name.length > 15 ? this.card.name.slice(0,15) : this.card.name
     }
   }
 }
