@@ -40,9 +40,10 @@ export default {
         this.$emit('afterFirst')
       } else if (this.cardNum >= 10) {
         alert('이미 10장의 카드를 선택하였습니다.')
+      } else if (this.card.name === '카드명') {
+        alert('로딩중입니다. 잠시만 기다려주세요.')
       } else {
         this.$store.dispatch('pickCard', this.card)
-        console.log('111')
       
         if (this.cardNum < 10) {
           this.$store.dispatch('openCard')
