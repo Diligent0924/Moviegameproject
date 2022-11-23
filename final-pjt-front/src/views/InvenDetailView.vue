@@ -1,23 +1,21 @@
 <template>
-  <div :style="{ backgroundImage: 'linear-gradient(to right, rgba(31.5, 31.5, 52.5, 1) 150px, rgba(31.5, 31.5, 52.5, 0.84) 100%), url(' + backdroppath + ')', backgroundSize: 'cover', height:'1000px', }">
+  <div :style="{ backgroundImage: 'linear-gradient(rgba(31.5, 31.5, 52.5, 1) 0px, rgba(40.5, 35.5, 60.5, 0.84) -300%), url(' + backdroppath + ')', backgroundSize: 'cover', height:'1000px', marginLeft:0,}">
     <b-container class="bv-example-row" style="color:white">
-      <b-row>
+      <b-row style="height:1000px" align-v="center">
         <b-col sm="4"><img :src="posterpath" alt=""></b-col>
-        <b-col sm="8">
+        <b-col sm="8" class="text-start">
           <b-row>
-            {{movie.title}}
+            <h1>{{movie.title}}</h1>
+          </b-row>
+          <b-row style="display: flex;">
+            <p>
+              <span>개봉일자 : {{movie.release_date}}</span> &nbsp; &nbsp; &nbsp; 장르 :
+              <span v-for="(genre, index) in genres" :key="index">{{genre}} &nbsp;</span>
+            </p>
+            <p>평점 : {{movie.vote_average}}</p>
           </b-row>
           <b-row>
-            {{movie.tagline}}
-          </b-row>
-          <b-row>
-            평점 : {{movie.vote_average}}
-          </b-row>
-          <b-row>
-            장르 : {{genres}}
-          </b-row>
-          <b-row>
-            장르 : {{movie.overview}}
+            <p>{{movie.overview}}</p>
           </b-row>
         </b-col>
       </b-row>

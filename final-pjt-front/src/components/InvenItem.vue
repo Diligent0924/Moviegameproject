@@ -1,19 +1,16 @@
 <template>
-  <div>
+  <div @click="movieDetail">
   <b-card
-    :title="movie.title"
     :img-src="posterpath"
     img-alt="Image"
     img-top
     tag="article"
-    style="max-width: 20rem; height: 40rem;"
+    style="max-width: 20rem; height: 25rem;"
     class="mb-2"
   >
     <!-- <b-card-text>
       {{ movie.tagline }}
     </b-card-text> -->
-  <hr>
-  <b-button href="#" variant="primary" @click="movieDetail">자세히보기</b-button>
   </b-card>
 </div>
 </template>

@@ -2,7 +2,7 @@
   <div >
     <h3>Lv.{{bossLevel+1}} {{boss.name}}</h3>
     <img :src="boss.posterpath" alt="" style="width: 200px; height: 200px;" @click="attackTo" :class="{ 'in-attack' : inAttack }">
-    <p ><b><span style="color:red">AD {{boss.attackdamage}}</span> <span style="color:green;">HP {{boss.hp}}</span></b></p>
+    <p><b><span style="color:red">AD {{boss.attackdamage}}</span> <span style="color:green;">HP {{boss.hp}}</span></b></p>
     <!-- <div style="display: flex; justify-content: center;">
       <BossCardItem
         v-for="(card, index) in cards"
