@@ -10,9 +10,9 @@
         :card=card :coinLeft="coinLeft"
         style="margin-left: 20px; margin-right: 20px;"
         @picking="picking" :isOpened="isOpened"
+        @coin-minus="coinMinus" @opening="opening"
       />
     </div>
-    <b-button :class="{disabled : coinLeft < 1 || isOpened}" variant="outline-primary" @click="openCard">카드 오픈!</b-button>
   </div>
 </template>
 
@@ -29,14 +29,11 @@ export default {
     CoinAddCardItem,
   },
   methods: { 
-    openCard() {
-      if (this.isOpened) {
-        alert('오픈된 카드 중 한장을 먼저 선택하세요!')
-      } else {
-        this.$store.dispatch('openCard')
-        this.$emit('coin-minus')
-        this.$emit('opening')
-      }
+    coinMinus() {
+      this.$emit('coin-minus')
+    },
+    opening() {
+      this.$emit('opening')
     },
     picking() {
       this.$emit('picking')

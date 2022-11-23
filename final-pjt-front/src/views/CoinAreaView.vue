@@ -38,6 +38,7 @@ export default {
     },
     picking() {
       this.isOpened = false
+      this.$store.dispatch('resetRandomCard')
     },
     opening() {
       this.isOpened = true

@@ -29,11 +29,7 @@ export default {
   },
   computed: {
     isLogined() {
-      if (this.$store.state.token) {
-        return true
-      } else {
-        return false
-      }
+      return this.$store.state.token ? true : false
     },
     movies() {
       return this.$store.state.inven
