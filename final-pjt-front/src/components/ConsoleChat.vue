@@ -1,10 +1,17 @@
 <template>
   <div>
-    <p>Player Hp: {{ playerHp }}</p>
-    <!-- <p>gu{{turns}} 번째 턴</p> -->
+    <b-container class="bv-example-row">
+      <b-row class="text-center">
+        <b-col cols="8"><b>{{battleLog}}</b></b-col>
+        <b-col style="color:crimson;"><b>Player Hp: {{ playerHp }}</b></b-col>
+        <b-col v-if="isPlayerTurn">{{playerTurn}}</b-col>
+        <b-col v-if="!isPlayerTurn">{{bossTurn}}</b-col>
+      </b-row>
+    </b-container>
+    <!-- <p style="color:crimson;">Player Hp: {{ playerHp }}</p>
     <p v-if="isPlayerTurn">{{playerTurn}}</p>
     <p v-if="!isPlayerTurn">{{bossTurn}}</p>
-    <h3>{{battleLog}}</h3>
+    <h5>{{battleLog}}</h5> -->
   </div>
 </template>
 
