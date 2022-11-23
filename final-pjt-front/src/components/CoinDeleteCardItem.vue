@@ -24,12 +24,12 @@ export default {
       if (this.isOpened) {
         alert('오픈된 카드 중 한장을 먼저 선택하세요.')
       } else if (this.cardNum <= 5) {
-          alert('카드의 최소 장수는 5장입니다!')
+        alert('카드의 최소 장수는 5장입니다!')
       } else if (this.coinLeft > 0) {
-          this.$store.dispatch('deleteCard', this.card)
-          this.$emit('coinMinus')
+        this.$store.dispatch('deleteCard', this.card)
+        this.$emit('coinMinus')
       } else {
-          alert('이미 4번의 기회를 모두 사용하셨습니다.')
+        alert('이미 4번의 기회를 모두 사용하셨습니다.')
       }
     }
   }

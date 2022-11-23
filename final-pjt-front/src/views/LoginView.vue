@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 id="login_head">SAFFY Stone</h1>
+    <h1 id="login_head">JSstone</h1>
     <form @submit.prevent="logIn">
       <label for="username">USERNAME &nbsp;&nbsp;</label>
       <input type="text" id="username" v-model="username" class="upload-name"><br>

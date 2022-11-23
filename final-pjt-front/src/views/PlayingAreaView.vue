@@ -413,32 +413,27 @@ export default {
     bossAttack() {
       // 일반 공격을 할지, 스킬을 쓸 지 결정
       const skillNum = this.boss.bossskill_set.length
-      const whichSkill = _.sample(_.range(1, skillNum+2))
+      const whichSkill = _.sample(_.range(skillNum+3))
       const targets = this.inFields.length
-      const atkNum = _.sample(_.range(1, targets+2))
+      const atkNum = _.sample(_.range(targets+1))
       console.log(whichSkill)
       // 일반 공격
-      if (whichSkill === skillNum+1) {
-        if (targets === 0) {
+      if (whichSkill >= skillNum) {
+        if (targets === 0 || atkNum === targets) {
           this.playerHp -= this.boss.attackdamage
           this.battleLog = `${this.boss.name}가 플레이어에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         } else {
-          if (atkNum === targets+1) {
-            this.playerHp -= this.boss.attackdamage
-            this.battleLog = `${this.boss.name}가 플레이어에게 ${this.boss.attackdamage}의 피해를 입혔다.`
-          } else {
-            this.inFields[atkNum-1].hp -= this.boss.attackdamage
-            this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum-1].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
-          }
+          this.inFields[atkNum-1].hp -= this.boss.attackdamage
+          this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum-1].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         }
         setTimeout(() => {
           this.battleLog = '손패를 클릭해 내려놓거나, 필드의 유닛을 클릭해 공격하세요'
         }, 1000)
       } else {
         // 스킬 공격
-        const skillMessage = this.boss.bossskill_set[whichSkill-1]['skillcomment']
-        const skillType = this.boss.bossskill_set[whichSkill-1]['skilltype']
-        const skillRange = this.boss.bossskill_set[whichSkill-1]['skillrange']
+        const skillMessage = this.boss.bossskill_set[whichSkill]['skillcomment']
+        const skillType = this.boss.bossskill_set[whichSkill]['skilltype']
+        const skillRange = this.boss.bossskill_set[whichSkill]['skillrange']
         this.battleLog = `${skillMessage}`
 
         if (skillType === 'heal') {
@@ -449,18 +444,13 @@ export default {
           this.boss.attackdamge += skillRange
           this.battleLog += `\n${this.boss.name}의 공격력이 ${skillRange}만큼 증가합니다.`
         } else if (skillType === 'deal' || skillType === 'healnuff') {
-            if (targets === 0) {
+            if (targets === 0 || atkNum === targets) {
             this.playerHp -= skillRange
             this.battleLog += `\n${this.boss.name}가 플레이어에게 ${skillRange}의 피해를 입혔다.`
           } else {
-            if (atkNum === targets+1) {
-              this.playerHp -= skillRange
-              this.battleLog += `\n${this.boss.name}가 플레이어에게 ${skillRange}의 피해를 입혔다.`
-            } else {
-              this.inFields[atkNum-1].hp -= skillRange
-              this.battleLog += `\n${this.boss.name}가 ${this.inFields[atkNum-1].name}에게 ${skillRange}의 피해를 입혔다.`
+              this.inFields[atkNum].hp -= skillRange
+              this.battleLog += `\n${this.boss.name}가 ${this.inFields[atkNum].name}에게 ${skillRange}의 피해를 입혔다.`
             }
-          }
         } else if (skillType === 'alldeal') {
           this.inFields.forEach((fieldcard) => {
             fieldcard.hp -= skillRange
@@ -469,18 +459,17 @@ export default {
           this.battleLog += `\n${this.boss.name}가 모든 카드와 플레이어에게 ${skillRange}의 데미지를 입혔다!`
 
         } else if (skillType === 'attacknuff') {
-          if (targets === 0 || atkNum === targets+1) {
+          if (targets === 0 || atkNum === targets) {
             setTimeout(() => {
               this.battleLog += `\n공격력 감소의 적용 대상이 없습니다!`
             })
           } else {
-            if (this.inFields[atkNum-1].attackdamage - skillRange >= 0) {
-              this.inFields[atkNum-1].attackdamage -= skillRange
+            if (this.inFields[atkNum].attackdamage - skillRange >= 0) {
+              this.inFields[atkNum].attackdamage -= skillRange
             } else {
-              this.inFields[atkNum-1].attackdamage = 0
+              this.inFields[atkNum].attackdamage = 0
             }
-            this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum-1].name}의 공격력을 ${skillRange}만큼 감소시켰다.`
-
+            this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum].name}의 공격력을 ${skillRange}만큼 감소시켰다.`
           }
         } else {
           this.battleLog += '\n기타 스킬쓰'
