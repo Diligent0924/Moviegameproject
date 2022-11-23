@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left:20%; margin-right:20%;">
+  <div style="margin-left:20%; margin-right:20%; margin-top:40px;">
     <h1>
       Score Board
     </h1>
