@@ -18,7 +18,8 @@
       <b-row>
         <b-col>
           <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>
-          <b-button :class="{disabled : !inAttack}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
+          <b-button :class="{disabled : !inAttack || !onTarget}" block variant="warning" @click="cancelAttack">공격 취소</b-button>
+          <b-button block variant="warning" @click="lose">항복</b-button>
         </b-col>
       </b-row>
 
@@ -142,13 +143,11 @@ export default {
               // 보스에게 20의 피해를 주고 빙결 상태로 만듭니다.
               this.boss.hp -= card.skillrange
               this.isFreezed = true
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === '나는 밑에서 한장 너는 위에서 한장') {
               this.drawCard()
               this.drawCard()
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === '나는 필연적 존재이다!') {
               // 플레이어와 보스 중 한명의 체력이 반으로 줄어듭니다.
               let whodie = _.sample(_.range(2))
@@ -161,37 +160,31 @@ export default {
                 this.battleLog = `플레이어의 체력이 ${this.playerHp-newhp}만큼 감소합니다.`
                 this.playerHp = newhp;
               }
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === 'Manners maketh man') {
               // 이번턴에 추가 액션을 획득합니다.
               this.playCardCount += 3
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === 'We will find a way. we always have.') {
               // 모든 아군 체력 10 증가
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.inFields.forEach((inField) => {
                 inField.hp += card.skillrange
               })
             } else if (card.skillcomment === '프로틴-바') {
               // 플레이어의 체력이 30 증가합니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.playerHp += card.skillrange
             } else if (card.skillcomment === 'I am Iron man') {
               // 모든 하수인의 공격력이 + 10이 됩니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.inFields.forEach((inField) => {
                 inField.attackdamage += card.skillrange
               })
             } else if (card.skillcomment === '친구는 가까이 두고, 적은 더 가까이 두어야 한다.') {
               // 적이 한턴 공격을 쉽니다.
               this.isFreezed = true
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === '내가 왕이 될 상인가') {
               // 하수인을 선택합니다. 공격력 60 or 공격력 1이 됩니다.
               this.setTarget(card)
@@ -201,8 +194,7 @@ export default {
             } else if (card.skillcomment === '하지만, 내가 돌아가면, 다시 날씨가..!') {
               // 필드가 바뀝니다. 보스의 공격력이 5만큼 감소합니다.
               this.boss.attackdamage -= card.skillrange
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === '넌 내 꿈이구 어머니 희망이야. 어서 가.') {
               // 하수인을 선택합니다. 해당 하수인이 손으로 돌아갑니다. 필드 하수인들의 체력이 +10이 됩니다.
               this.setTarget(card)
@@ -221,40 +213,34 @@ export default {
                 }
                 this.inFields.push(KimSsi)
               }
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
             } else if (card.skillcomment === '우린 노빠꾸다!') {
               // 하수인을 선택합니다. 하수인의 공격력이 40, 체력이 1이 됩니다.
               this.setTarget(card)
             } else if (card.skillcomment === '지나간 일에 새로운 눈물을 낭비하지 말자') {
               // 모든 하수인이 +20 회복됩니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.inFields.forEach((inField) => {
                 inField.hp += card.skillrange
               })
             } else if (card.skillcomment === '신에게는 아직 12척의 배가 남아있습니다') {
               // 모든 하수인의 공격력이 +10 증가합니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.inFields.forEach((inField) => {
                 inField.attackdamage += card.skillrange
               })
             } else if (card.skillcomment === '이 사람들 빨리 내보내야돼. 안 그러면 우리까지 위험해져') {
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.drawCard()
               this.drawCard()
               this.drawCard()
             } else if (card.skillcomment === '착해서 돈이 많은 게 아니라 돈이 많으니까 착한 거야') {
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.drawCard()
               this.drawCard()
               this.drawCard()
             } else if (card.skillcomment === '경찰이 고문해서 대학생이 죽었는데, 보도지침이 대수야?') {
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.drawCard()
               this.drawCard()
               this.drawCard()
@@ -266,12 +252,10 @@ export default {
               this.setTarget(card)
             } else if (card.skillcomment === '아빠 딸로 태어나줘서 고맙습니다.') {
               // 내 캐릭터의 체력이 +40 증가합니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.playerHp += card.skillrange
             } else if (card.skillcomment === '나 지금 이거 일생일대 기횐 거 같애') {
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               this.drawCard()
               this.drawCard()
               this.drawCard()
@@ -280,8 +264,7 @@ export default {
               this.setTarget(card)
             } else if (card.skillcomment === '두려움은 직시하면 그 뿐. 바람은 계산하는 것이 아니라 극복하는 것이다.') {
               // 보스의 체력이 30 이하라면 즉사합니다. 아니라면 10의 데미지를 줍니다.
-              this.realPlay(card)
-              this.goToDie(card)
+              this.handToDie(card)
               if (this.boss.hp <= 30) {
                 this.boss.hp -= 10000000
               } else {
@@ -346,7 +329,6 @@ export default {
           } else {
             this.inFields[index].attackdamage = 1
           }
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '키미노 나마에와') {
           // 보스와 이름을 바꿉니다.
           const bname = this.boss.name
@@ -355,27 +337,22 @@ export default {
           this.boss.name = cname
           this.inFields[index].attackdamage += 10
           this.inFields[index].hp += 10
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '넌 내 꿈이구 어머니 희망이야. 어서 가.') {
           // 하수인을 손으로 불러들임. 다른 모든 하수인 체력 + 10
           const newCard = card
           this.inFields.splice(index, 1)
           this.startDeck.push(newCard)
           this.inFields.forEach((inField) => { inField.hp += 10 })
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '우린 노빠꾸다!') {
           // 하수인 공격력 40, 체력 1로 만듬
           this.inFields[index].attackdamage = 40
           this.inFields[index].hp = 1
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '왕갈비통닭 한마리요~') {
           // 하수인 체력 +40
           this.inFields[index].hp += 40
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '작별인사는 하고 가야지') {
           // 이번턴에 하수인 공격력 +25
           this.inFields[index].attackdamage += 25
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '비벼~ 막비벼~') {
           // 바로 옆 하수인 체력 +10
           if (this.inFields.length >= index+2) {
@@ -384,15 +361,13 @@ export default {
           if (index !== 0) {
             this.inFields[index-1].hp += 10
           }
-          this.realplay(this.atkCard)
         } else if (this.atkCard.skillcomment === '내일을 사는 놈은 오늘만 사는 놈을 못이긴다.') {
           // 공격력 +40, but 이번턴 끝나고 죽음
           this.inFields[index].attackdamage += 40
           this.willDie = card
-          this.realplay(this.atkCard)
         }
-        this.goToDie(this.atkcard)
-        this.atkCard = null
+
+        this.handToDie(this.atkcard)
       }
     },
     attack(attackFrom) {
@@ -528,6 +503,14 @@ export default {
       const index = this.inFields.indexOf(dyingCard)
       this.inFields.splice(index, 1)
       this.deadCards.push(dyingCard)
+    },
+    handToDie(dyingCard) {
+      this.playCardCount--
+      console.log(dyingCard)
+      const index = this.startDeck.indexOf(dyingCard)
+      this.startDeck.splice(index, 1)
+      this.deadCards.push(dyingCard)
+      this.atkCard = null
     },
     setTarget(atkCard) {
       this.battleLog = '스킬 적용 대상을 선택하세요. \n 취소를 원하시면 취소 버튼을 눌러주세요.'
