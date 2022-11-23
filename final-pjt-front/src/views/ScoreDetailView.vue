@@ -24,16 +24,20 @@
           </b-card-text>
         </b-card>
       </b-row>
-      <b-row>
-        <b-col cols="3">{{username}}</b-col>
+      <b-row style="margin-top:30px;">
+        <b-col cols="3" style="margin-top:10px;">
+          <b-card-text>
+            {{username}}
+          </b-card-text>
+        </b-col>
         <b-col v-if="isLogined" cols="6"><CommentCreate @add-comment="getArticleDetail"  /></b-col>
         <b-col cols="3"></b-col>
       </b-row>
-      <b-row>
-        <b-col coles="2"></b-col>
-        <b-col coles="8"><CommentList :comments="comments" /></b-col>
-        <b-col coles="2"></b-col>
+      <b-row class="text-start my-5">
+        <b-col cols="10"><CommentList :comments="comments" /></b-col>
+        <b-col cols="2"></b-col>
       </b-row>
+      <hr>
     </b-container>
   </div>
 </template>
@@ -84,7 +88,7 @@ export default {
   },
   computed: {
     username(){
-      return this.$store.state.username ? this.$store.state.username : '비회원'
+      return this.$store.state.username ? this.$store.state.username : ''
     },
     isLogined() {
       return this.$store.state.token ? true : false

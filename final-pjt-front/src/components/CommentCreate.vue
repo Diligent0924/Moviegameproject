@@ -4,7 +4,7 @@
       <b-container class="bv-example-row">
         <b-row class="text-center">
           <b-col cols="9">
-            <input type="text" v-model.trim="comment" class="form-control" placeholder="Leave a comment here" id="floatingTextarea">
+            <input type="text" v-model.trim="comment" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"   >
           </b-col>
           <b-col>
             <button type="submit" class="btn btn-outline-success">작성하기</button>
