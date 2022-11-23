@@ -46,6 +46,8 @@ export default new Vuex.Store({
     },
     DELETE_TOKEN(state) {
       state.token = null
+      state.username = null
+      router.push({ name: 'inven' })
     },
     PICK_CARD(state, pickedCard) {
       state.userCards.push(pickedCard)

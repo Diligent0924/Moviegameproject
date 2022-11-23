@@ -13,17 +13,20 @@
         </b-col>
       </b-row>
       <b-row>
-        <div class="hover-container g-4">
+        <div class="hover-container g-4 px-0">
           <ScoreDetailItem class="item" v-for="(card, index) in article.moviecard_set" :key="index" :card="card" />
         </div>
-        <!-- 여기는 사용한 카드를 넣는 곳 크기를 작게 해서 넣자.-->
+      </b-row>
+      <b-row style="height:150px; margin-top:30px;" class="text-start">
+        <b-card bg-variant="none" text-variant="black">
+          <b-card-text>
+            {{article.content}}
+          </b-card-text>
+        </b-card>
       </b-row>
       <b-row>
-        <h4>내용 : {{article.content}}</h4>
-      </b-row>
-      <b-row>
-        <b-col cols="3"></b-col>
-        <b-col cols="6"><CommentCreate @add-comment="getArticleDetail" /></b-col>
+        <b-col cols="3">{{username}}</b-col>
+        <b-col v-if="isLogined" cols="6"><CommentCreate @add-comment="getArticleDetail"  /></b-col>
         <b-col cols="3"></b-col>
       </b-row>
       <b-row>
@@ -79,6 +82,14 @@ export default {
         .catch(err => console.log(err))
     },
   },
+  computed: {
+    username(){
+      return this.$store.state.username ? this.$store.state.username : '비회원'
+    },
+    isLogined() {
+      return this.$store.state.token ? true : false
+    }
+  }
 }
 </script>
 
