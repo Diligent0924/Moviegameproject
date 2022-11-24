@@ -112,9 +112,26 @@ export default new Vuex.Store({
     },
     GET_INVEN_DETAIL(state, payload) {
       state.invenDetail = payload
+    },
+    ALL_RESET(state) {
+      state.token = null,
+      state.username = null,
+      state.userCards = [],
+      state.randomCards = [
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null},
+        { 'name': '카드명', 'posterpath': 'https://trees.gamemeca.com/wp-content/uploads/2018/02/tree_ico_hearthstone.png', 'attackdamage': '공격력', 'hp': '생명력', 'skillType': null}
+      ],
+      state.bossLevel = 0,
+      state.useTurns = [],
+      state.finalUserCard = [],
+      state.finalBossLevel = 0,
+      state.playerHp = 40,
+      state.canGo = true,
+      state.scores = []
     }
   },
-  // ACTIONS
+  //////// ACTIONS /////////
   actions: {
     logIn(context, payload) {
       const username = payload.username
@@ -320,6 +337,21 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err)
         })
+    },
+    allReset(context) {
+      const username = context.state.username
+      axios({
+        method: 'delete',
+        url: `${API_URL}/accounts/delete/${username}/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => console.log(err))
+      context.commit('ALL_RESET')
     }
   },
   modules: {

@@ -8,6 +8,7 @@
           </router-link>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <button variant="success" v-if="isLogined && notInPlay" @click="logOut" type="button" class="btn btn-outline-warning">로그 아웃</button>
+          <b-button variant="danger" @click="allReset" >초기화</b-button>
         </div>
         <div class="mx-5">
           <div class="my-2 mx-3">
@@ -50,8 +51,15 @@ export default {
     logOut() {
       this.$store.dispatch('logout');
       this.$router.push({ name: 'login' });
+    },
+    allReset() {
+      if (confirm('정말 초기화 하시겠습니까?\n로그인 정보를 포함한 모든 상태가 초기화됩니다.')) {
+        this.$store.dispatch('allReset')
+        alert('모든 정보가 초기화되었습니다. 회원가입 페이지로 이동합니다.')
+        this.$router.push({ name: 'signup' })
+      }  
     }
-  }
+  },
 }
 </script>
 
