@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 
 # permission Decorators
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -20,7 +20,7 @@ from accounts.models import User
 from inven.models import Moviecount
 
 @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def scoreboard_list(request):
     if request.method == 'GET': # 전체데이터확인
         articles = Board.objects.raw('select * from scoreboard_board order by id')
@@ -70,7 +70,7 @@ def comment_list(request):
         return Response(serializer.data)
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def comment_create(request, board_pk):
     # article = Article.objects.get(pk=article_pk)
     board = get_object_or_404(Board, pk=board_pk)
