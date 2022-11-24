@@ -11,7 +11,7 @@
 
         <label for="password2"> 비밀번호 확인 &nbsp;</label>
         <input type="password" id="password2" v-model="password2" class="upload-name"><br>
-        <b-button variant="outline-success" type="submit">회원가입</b-button>
+        <b-button variant="outline-success" type="submit" style="width:500px;" class="mt-3">회원가입</b-button>
       </form>
     </div>
   </div>

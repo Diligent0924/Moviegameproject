@@ -1,5 +1,10 @@
 <template>
-  <div >
+  <div>
+    <b-progress :max="bossmaxhp" height="2rem" class="px-0">
+      <b-progress-bar :value="BossHp" class="fw-bold" variant="primary">
+        <span>Hp: {{BossHp}}</span>
+      </b-progress-bar>
+    </b-progress>
     <h3>Lv.{{bossLevel+1}} {{boss.name}}</h3>
     <img :src="boss.posterpath" alt="" style="width: 200px; height: 200px;" @click="attackTo" :class="{ 'in-attack' : inAttack }">
     <p><b><span style="color:red">AD {{boss.attackdamage}}</span> <span style="color:green;">HP {{boss.hp}}</span></b></p>
@@ -24,6 +29,7 @@ export default {
   data() {
     return {
       cards: ['card1', 'card2', 'card3', 'card4', 'card5'],
+      bossmaxhp : 0,
     }
   },
   props: {
@@ -38,7 +44,15 @@ export default {
       } else {
         alert('공격을 수행할 카드를 먼저 선택하세요.')
       }
-    }
+    },
+  },
+  created() {
+    this.bossmaxhp = this.boss.hp  
+  },
+  computed: {
+    BossHp(){
+      return this.boss.hp
+    },
   }
 }
 </script>
