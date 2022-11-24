@@ -5,7 +5,7 @@
         v-for="(card, index) in userHand"
         :key="`${index}-${card}inplayerarea`"
         :card=card
-        @playCard="playCard"
+        @playCard="playCard" class="mx-2"
       />
     </div>
   </div>

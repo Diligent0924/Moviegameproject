@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'can-attack' : canAttack,  'can-choose' : canChoose}">
-    <b-card bg-variant="default" text-variant="black" :header="name" class="text-center;" style="width:250px;" @click="attack" >
-      <img :src="fieldCard.posterpath" alt="" style="width: 100px; height: 100px;" >
+    <b-card bg-variant="default" text-variant="black" :header="name" class="text-center mx-0 px-0" style="width:250px;" @click="attack" >
+      <img :src="fieldCard.posterpath" alt="" style="width: 220px; height: 150px;" >
       <b-card-text>
         <span style="color:crimson;"><b>AD {{ fieldCard.attackdamage }}</b></span>  &nbsp;
         <span style="color:green;"><b>HP {{ fieldCard.hp }}</b></span>
