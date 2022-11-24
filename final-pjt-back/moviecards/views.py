@@ -1,36 +1,28 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-# Authentication Decorators
-from rest_framework.decorators import authentication_classes
 
 # permission Decorators
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
-from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import CardSerializer,NormalCardSerializer,UniqueCardSerializer,BossCardSerializer, UniqueSkillSerializer,BossSkillSerializer,normaldetailSerializer,UniquedetailSerializer,BossdetailSerializer,plusSerializer
 from .models import Card,NormalCard,UniqueCard,BossCard,UniqueSkill,BossSkill
 
-import random
 import requests
-import json
 from .apikey import tmdb_api_key
 from .data import boss_info, unique_list
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def cards_list(request): # 전체 카드를 보여준다.
     card = Card.objects.raw("SELECT * from moviecards_card")
     serializer = CardSerializer(card, many=True)
     return Response(serializer.data)
 
 @api_view(['GET','POST'])
-# @permission_classes([IsAuthenticated])
 def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
     if request.method == 'GET':
         normal_card = NormalCard.objects.raw("SELECT * from moviecards_normalcard")
-        print(normal_card)
         serializer = NormalCardSerializer(normal_card, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -54,9 +46,7 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
                     normal_card.save()
         return Response(status=status.HTTP_201_CREATED)
 
-# 특수 카드를 더하는 공간
 @api_view(['GET','POST'])
-# @permission_classes([IsAuthenticated])
 def uniquecard_list(request):
     if request.method == 'GET':
         uniquecard = BossCard.objects.raw("select * from moviecards_uniquecard")
@@ -82,16 +72,12 @@ def uniquecard_list(request):
         return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET','POST'])
-# @permission_classes([IsAuthenticated])
 def bosscard_list(request): # 보스 카드를 더한다.
     if request.method == 'GET':
         bosscard = BossCard.objects.raw("select * from moviecards_bosscard")
         serializer = BossCardSerializer(bosscard, many=True)
-        print(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
-        print(request.user)
-        print(request.user.is_superuser)
         if not request.user.is_superuser:
             return Response(status=status.HTTP_403_FORBIDDEN)
         # 중복방지 필요
@@ -115,7 +101,6 @@ def bosscard_list(request): # 보스 카드를 더한다.
 @api_view(['GET']) 
 def card_detail(request, card_pk):
     card = Card.objects.raw(f'select * from moviecards_card where movieid={card_pk}') # 리스트형태로 준다.
-    print(card[0].movietype)
     # movietype이 normal, unique, boss 중 어떤 것이냐에 따라서 serializer를 다르게 보내준다.
     if card[0].movietype == 'normal':
         serializer = normaldetailSerializer(card[0])
@@ -130,7 +115,6 @@ def card_detail(request, card_pk):
 @api_view(['POST']) # POST로 변경 필요
 @permission_classes([IsAuthenticated])
 def plus(request):
-    # Normal Card하고 Unique 카드 비율을 어떻게 산정할 것인지에 대한 논의가 필요함...
     card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
     play_card = [] # 플레이할 카드!
     for data in card:
@@ -139,6 +123,3 @@ def plus(request):
     
     serializer = plusSerializer(play_card, many=True)
     return Response(serializer.data) 
-
-
-#str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}")

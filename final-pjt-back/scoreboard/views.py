@@ -1,9 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
 # Authentication Decorators
 # from rest_framework.decorators import authentication_classes
 
@@ -64,7 +61,6 @@ def board_detail(request, board_pk):
 @api_view(['GET'])
 def comment_list(request):
     if request.method == 'GET':
-        # comments = Comment.objects.all()
         comments = get_list_or_404(Comment)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
@@ -72,7 +68,6 @@ def comment_list(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def comment_create(request, board_pk):
-    # article = Article.objects.get(pk=article_pk)
     board = get_object_or_404(Board, pk=board_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
