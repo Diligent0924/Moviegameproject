@@ -154,6 +154,9 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/accounts/logout/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
       })
       .then(() => {
         // console.log(res)
@@ -167,9 +170,6 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/normalcard_list/`,
-        // headers: {
-        //   Authorization: `Token ${context.state.token}`
-        // }
       })
         .then(res => { console.log(res) })
         .catch(err => { console.log(err) })
@@ -177,9 +177,6 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/bosscard_list/`,
-        // headers: {
-        //   Authorization: `Token ${context.state.token}`
-        // }
       })
         .then(res => {
           console.log(res)
@@ -190,9 +187,6 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/uniquecard_list/`,
-        // headers: {
-        //   Authorization: `Token ${context.state.token}`
-        // }
       })
         .then(res => {
           console.log(res)
@@ -206,8 +200,11 @@ export default new Vuex.Store({
       const API_URL = 'http://127.0.0.1:8000'
 
       axios({
-        method: 'get',
-        url: `${API_URL}/moviecards/plus/`
+        method: 'post',
+        url: `${API_URL}/moviecards/plus/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
       })
         .then(res => {
           let payload = [res.data[0], res.data[1], res.data[2]]
