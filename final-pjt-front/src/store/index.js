@@ -96,7 +96,6 @@ export default new Vuex.Store({
       state.finalUserCard = []
       state.useTurns = []
       if (clearMessage === 'Failed') {
-        console.log('111111')
         state.token = null
         state.username = null
       }

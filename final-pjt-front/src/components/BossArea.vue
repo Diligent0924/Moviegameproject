@@ -7,27 +7,15 @@
     </b-progress>
     <img :src="boss.posterpath" alt="" style="width: 200px; height: 200px;" @click="attackTo" :class="{ 'in-attack' : inAttack }">
     <p><b><span style="color:red">AD {{boss.attackdamage}}</span> <span style="color:green;">HP {{boss.hp}}</span></b></p>
-    <!-- <div style="display: flex; justify-content: center;">
-      <BossCardItem
-        v-for="(card, index) in cards"
-        :key="`${index}-${card}-inbossarea`"
-        :card=card
-      /> -->
-    <!-- </div> -->
   </div>
 </template>
 
 <script>
-// import BossCardItem from '@/components/BossCardItem'
 
 export default {
   name: 'BossArea',
-  // components: {
-  //     BossCardItem
-  // },
   data() {
     return {
-      cards: ['card1', 'card2', 'card3', 'card4', 'card5'],
       bossmaxhp : 0,
     }
   },
@@ -46,7 +34,7 @@ export default {
     },
   },
   created() {
-    this.bossmaxhp = this.boss.hp  
+    this.bossmaxhp = this.boss.hp
   },
   computed: {
     BossHp(){
