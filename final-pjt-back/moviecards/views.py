@@ -10,6 +10,7 @@ from .serializers import CardSerializer,NormalCardSerializer,UniqueCardSerialize
 from .models import Card,NormalCard,UniqueCard,BossCard,UniqueSkill,BossSkill
 
 import requests
+import random
 from .apikey import tmdb_api_key
 from .data import boss_info, unique_list
 
@@ -42,7 +43,9 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
                 if data["id"] not in harry_list and data["id"] not in harry_list:
                     card = Card(movieid=data['id'],movietype='normal')
                     card.save()
-                    normal_card = NormalCard(card=card, name=data['title'], posterpath = str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}"),attackdamage = int(data["vote_average"]*3), hp = int(data['popularity']**(1/2)))
+                    random_attack_range = [0.6,0.8,1,1.2]
+                    value = random.choice(random_attack_range)
+                    normal_card = NormalCard(card=card, name=data['title'], posterpath = str(f"https://image.tmdb.org/t/p/w500{data['poster_path']}"),attackdamage = int(data["vote_average"]*3*value + 3), hp = int(data['popularity']**(1/2)+5))
                     normal_card.save()
         return Response(status=status.HTTP_201_CREATED)
 
