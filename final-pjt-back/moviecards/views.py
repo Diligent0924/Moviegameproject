@@ -78,8 +78,6 @@ def bosscard_list(request): # 보스 카드를 더한다.
         serializer = BossCardSerializer(bosscard, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        if not request.user.is_superuser:
-            return Response(status=status.HTTP_403_FORBIDDEN)
         # 중복방지 필요
         bosscard = BossCard.objects.raw('select * from moviecards_bosscard')
         if len(bosscard) >= 7: # BossCard를 보내줘야지!
