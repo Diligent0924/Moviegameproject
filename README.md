@@ -26,7 +26,7 @@
 
 ## 데이터베이스 모델링 (ERD)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7a0040dd-8abd-4703-be8b-0dfd66a115cb/Untitled.png)
+https://lab.ssafy.com/sdc00035/final-pjt/-/raw/main/ssafy-pjt-pjt.png
 
 ## 영화 추천 알고리즘에 대한 기술적 설명
 
