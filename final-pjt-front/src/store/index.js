@@ -231,13 +231,13 @@ export default new Vuex.Store({
       context.state.finalUserCard.forEach((card) => {
         movie_id.push(card.movieid)
       })
-      console.log(movie_id)
+
       axios({
         method: 'post',
         url: `${API_URL}/scoreboard/`,
-        // headers: {
-        //   Authorization: `Token ${context.state.token}`
-        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        },
         data: {
           'title': payload.title,
           'content': payload.content,
@@ -273,9 +273,9 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/scoreboard/${payload.boardId}/comments/`,
-        // headers: {
-        //   Authorization: `Token ${context.state.token}`
-        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        },
         data: {content, user}
       })
         .then((res) => {
