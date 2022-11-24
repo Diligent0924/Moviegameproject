@@ -408,6 +408,7 @@ export default {
         this.startDeck.splice(atkIndex, 1)
         this.deadCards.push(this.atkCard)
         this.atkCard = null
+        this.onTarget = false
       }
     },
     attack(attackFrom) {
