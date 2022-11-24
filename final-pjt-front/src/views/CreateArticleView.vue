@@ -23,8 +23,12 @@
       </b-row>
       <b-row class="my-5">
         <form @submit.prevent="createArticle" class="form-floating">
-          <input type="text" v-model.trim="title" class="form-control py-0" placeholder="제목을 입력해주세요!" id="floatingTextarea">
-          <textarea v-model.trim="content" class="form-control py-3 my-4" placeholder="글을 입력해주세요!" id="floatingTextarea_2"></textarea>
+          <b-row>
+            <input type="text" v-model.trim="title" class="py-0 rounded border border-white" style="height:50px;" placeholder="제목을 입력해주세요!">
+          </b-row>
+          <b-row>
+            <textarea v-model.trim="content" class="py-3 my-4 rounded border border-white" placeholder="글을 입력해주세요!"></textarea>
+          </b-row>
           <button type="submit" class="btn btn-outline-success">작성하기</button>
         </form>
       </b-row>
@@ -39,8 +43,8 @@ export default {
   name: 'CreateArticleView',
   data() {
     return {
-      title: null,
-      content: null,
+      title: '',
+      content: '',
     }
   },
   methods: {
