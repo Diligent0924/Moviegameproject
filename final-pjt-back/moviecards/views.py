@@ -126,7 +126,8 @@ def card_detail(request, card_pk):
         serializer = BossdetailSerializer(card[0])
         return Response(serializer.data)
 
-@api_view(['GET']) # POST로 변경 필요
+@api_view(['POST']) # POST로 변경 필요
+@permission_classes([IsAuthenticated])
 def plus(request):
     # Normal Card하고 Unique 카드 비율을 어떻게 산정할 것인지에 대한 논의가 필요함...
     card = Card.objects.raw('select * from moviecards_card where movietype != "boss" order by rand() limit 3')
