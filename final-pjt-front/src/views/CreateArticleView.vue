@@ -18,7 +18,7 @@
 
       <b-row>
         <div class="hover-container g-4 px-0">
-          <MyCard class="item" v-for="(card, index) in finalDeck" :key="index" :card="card" />
+          <CreateArticleItem class="item" v-for="(card, index) in finalDeck" :key="index" :card="card" />
         </div>
       </b-row>
       <b-row class="my-5">
@@ -33,8 +33,7 @@
 </template>
 
 <script>
-import MyCard from '@/components/MyCard'
-
+import CreateArticleItem from '@/components/CreateArticleItem'
 
 export default {
   name: 'CreateArticleView',
@@ -76,7 +75,7 @@ export default {
     }
   },
   components: {
-    MyCard
+    CreateArticleItem
   }
 }
 </script>

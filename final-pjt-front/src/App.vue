@@ -78,14 +78,14 @@ export default {
   },
   watch: {
     height (newHeight) {
-      if (newHeight <= 1000) {
+      if (newHeight <= 900) {
         this.toSmall = true
       } else {
         this.toSmall = false
       }
     },
     width (newWidth) {
-      if (newWidth <= 1300) {
+      if (newWidth <= 1200) {
         this.toSmall = true
       } else {
         this.toSmall = false
@@ -96,7 +96,7 @@ export default {
     window.addEventListener("resize", this.resizeHandler);
   },
   destroyed()  {
-      window.removeEventListener("resize", this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
   },
   mounted()  {
     this.height = window.innerHeight;

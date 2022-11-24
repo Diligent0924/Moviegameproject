@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- <div style="height:50px;"><p>{{card.name}}</p></div> -->
+  <div @click="movieDetail">
     <img :src="card.posterpath" alt="">
   </div>
 </template>
@@ -10,7 +9,12 @@ export default {
   name: 'ScoreDetailItem',
   props: {
     card: Object,
-  }
+  },
+  methods: {
+    movieDetail() {
+      this.$router.push({ name: 'invendetail', params: {movieid: this.card.movie_id} })
+    }
+  },
 } 
 </script>
 
