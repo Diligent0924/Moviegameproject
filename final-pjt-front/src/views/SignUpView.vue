@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <h1>JSstone 회원가입 페이지</h1>
-    <form @submit.prevent="signUp">
-      <label for="username">USERNAME &nbsp;&nbsp;</label>
-      <input type="text" id="username" v-model="username" class="upload-name"><br>
+  <div :style="{ backgroundImage: 'linear-gradient(rgba(31.5, 31.5, 52.5, 1) 0px, rgba(40.5, 35.5, 60.5, 0.84) -100%), url(' + backdroppath + ')', backgroundSize: 'cover', height:'1000px', marginLeft:0,}" class="text-white">
+    <div style="padding-top:10%;">
+      <h1>JSstone 회원가입</h1>
+      <form @submit.prevent="signUp">
+        <label for="username">USERNAME &nbsp;&nbsp;</label>
+        <input type="text" id="username" v-model="username" class="upload-name"><br>
 
-      <label for="password1"> 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-      <input type="password" id="password1" v-model="password1" class="upload-name"><br>
+        <label for="password1"> 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="password" id="password1" v-model="password1" class="upload-name"><br>
 
-      <label for="password2"> 비밀번호 확인 &nbsp;</label>
-      <input type="password" id="password2" v-model="password2" class="upload-name"><br>
-      
-      <input type="submit" value="SignUp">
-    </form>
+        <label for="password2"> 비밀번호 확인 &nbsp;</label>
+        <input type="password" id="password2" v-model="password2" class="upload-name"><br>
+        <b-button variant="outline-success" type="submit">회원가입</b-button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -39,6 +40,11 @@ export default {
       this.password1 = null
       this.password2 = null
       this.$store.dispatch('signUp', payload)
+    }
+  },
+  computed: {
+    backdroppath(){
+      return "https://img.freepik.com/free-photo/a-person-facing-the-purgatory-world-illustration_456031-40.jpg?size=626&ext=jpg&ga=GA1.2.1125130295.1667449114"
     }
   }
 }
