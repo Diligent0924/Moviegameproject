@@ -42,8 +42,9 @@ def scoreboard_list(request):
             movie_count.save()
 
         # 해당 회원을 그냥 탈퇴시킴
-        user = get_object_or_404(User, username = data['user'])
-        user.delete()
+        if data['stage'] != 7 or not user.is_superuser:
+            user = get_object_or_404(User, username = data['user'])
+            user.delete()
         return Response(status=status.HTTP_200_OK)
 
 
