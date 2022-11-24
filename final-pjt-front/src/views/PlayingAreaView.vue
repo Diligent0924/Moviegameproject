@@ -25,7 +25,7 @@
 
       <b-row>
         <b-col>
-          <ConsoleChat style="margin-left: 50px;" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
+          <ConsoleChat style="margin-left: 50px;" :bossLevel="bossLevel" :playCardCount="playCardCount" :leftCardNum="leftCardNum" :isPlayerTurn="isPlayerTurn" :battleLog="battleLog" :turns="turns" :playerHp="playerHp" />
         </b-col>
       </b-row>
 
@@ -81,6 +81,11 @@ export default {
   },
   created() {
     this.deckCopy()
+  },
+  computed: {
+    leftCardNum(){
+      return this.copiedDeck.length
+    }
   },
   methods: {
     deckCopy() {
