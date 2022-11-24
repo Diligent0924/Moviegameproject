@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <!-- <div id="whole"> -->
+    <div v-if="toSmall" class="justify-content-center" style="margin-top: 250px">
+      <h1>
+        원활한 게임 진행을 위해 화면을 키워주세요.
+      </h1>
+    </div>
+    <div v-else>
       <nav class="navbar navbar-light justify-content-between" style="background-color:#FFFAFA">
         <div class="mx-5">
           <router-link :to="{ name: 'inven' }" class="router-link-class">
@@ -28,7 +33,7 @@
         </div>
       </nav>
       <router-view/>
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -45,7 +50,7 @@ export default {
     },
     notInPlay() {
       return this.$store.state.canGo
-    }
+    },
   },
   methods: {
     logOut() {
@@ -57,8 +62,45 @@ export default {
         this.$store.dispatch('allReset')
         alert('모든 정보가 초기화되었습니다. 회원가입 페이지로 이동합니다.')
         this.$router.push({ name: 'signup' })
-      }  
+      }
+    },
+    resizeHandler()  {
+        this.height =  window.innerHeight;
+        this.width =  window.innerWidth;
+    },
+  },
+  data() {
+    return {
+      toSmall: false,
+      height: 0,
+      width: 0
     }
+  },
+  watch: {
+    height (newHeight) {
+      if (newHeight <= 1000) {
+        this.toSmall = true
+      } else {
+        this.toSmall = false
+      }
+    },
+    width (newWidth) {
+      if (newWidth <= 1300) {
+        this.toSmall = true
+      } else {
+        this.toSmall = false
+      }
+    }
+  },
+  created()  {
+    window.addEventListener("resize", this.resizeHandler);
+  },
+  destroyed()  {
+      window.removeEventListener("resize", this.resizeHandler);
+  },
+  mounted()  {
+    this.height = window.innerHeight;
+    this.width = window.innerWidth;
   },
 }
 </script>
