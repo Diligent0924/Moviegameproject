@@ -96,7 +96,6 @@ export default {
         const index = this.copiedDeck.indexOf(aCard)
         this.copiedDeck.splice(index, 1)
       })
-      this.boss.attackdamage = 1
     },
     drawCard() {
       if (this.copiedDeck.length > 0) {

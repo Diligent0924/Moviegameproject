@@ -170,6 +170,9 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/normalcard_list/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
       })
         .then(res => { console.log(res) })
         .catch(err => { console.log(err) })
@@ -177,16 +180,23 @@ export default new Vuex.Store({
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/bosscard_list/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
       })
         .then(res => {
           console.log(res)
           context.commit('MAKE_BOSSCARD', res.data)
         })
+        
         .catch(err => { console.log(err) })
 
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/uniquecard_list/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
       })
         .then(res => {
           console.log(res)
