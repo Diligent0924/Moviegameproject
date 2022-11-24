@@ -77,6 +77,7 @@ export default {
       willDie: null,
       canDraw: 0,
       canUseUnique: 0,
+      alreadyWin: false,
     }
   },
   created() {
@@ -435,21 +436,26 @@ export default {
       }
     },
     win() {
-      if (this.bossLevel === 6) {
-        this.battleLog = '축하합니다. 모든 스테이지를 클리어하였습니다! 잠시 후 게시글 작성 페이지로 이동합니다.'
-        setTimeout(() => {
-          this.$store.dispatch('canGoChange')
-          this.$router.push({ name: 'createarticle' })
-          this.$store.dispatch('win', { 'turns': this.turns })
-        }, 1000)
+      if (this.alreadyWin) {
+        return
       } else {
-        this.$store.dispatch('canGoChange')
-        this.battleLog = '축하합니다. 승리하였습니다. 잠시 후 다음 단계로 이동합니다.'
-        setTimeout(() => {
-          this.$router.push({ name: 'coin' })
-          this.$store.dispatch('win', { 'turns': this.turns })
+        this.alreadyWin = true;
+        if (this.bossLevel === 6) {
+          this.battleLog = '축하합니다. 모든 스테이지를 클리어하였습니다! 잠시 후 게시글 작성 페이지로 이동합니다.'
+          setTimeout(() => {
+            this.$store.dispatch('canGoChange')
+            this.$router.push({ name: 'createarticle' })
+            this.$store.dispatch('win', { 'turns': this.turns })
+          }, 1000)
+        } else {
           this.$store.dispatch('canGoChange')
-        }, 2000)
+          this.battleLog = '축하합니다. 승리하였습니다. 잠시 후 다음 단계로 이동합니다.'
+          setTimeout(() => {
+            this.$router.push({ name: 'coin' })
+            this.$store.dispatch('win', { 'turns': this.turns })
+            this.$store.dispatch('canGoChange')
+          }, 2000)
+        }
       }
     },
     bossAttack() {
