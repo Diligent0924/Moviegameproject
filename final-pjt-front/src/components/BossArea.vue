@@ -1,11 +1,10 @@
 <template>
   <div>
-    <b-progress :max="bossmaxhp" height="2rem" class="px-0">
+    <b-progress :max="bossmaxhp" height="2rem" class="px-0 mb-3">
       <b-progress-bar :value="BossHp" class="fw-bold" variant="primary">
-        <span>Hp: {{BossHp}}</span>
+        <span>Hp: {{BossHp}} &nbsp; &nbsp;&nbsp;(LV {{bossLevel+1}} {{boss.name}})</span>
       </b-progress-bar>
     </b-progress>
-    <h3>Lv.{{bossLevel+1}} {{boss.name}}</h3>
     <img :src="boss.posterpath" alt="" style="width: 200px; height: 200px;" @click="attackTo" :class="{ 'in-attack' : inAttack }">
     <p><b><span style="color:red">AD {{boss.attackdamage}}</span> <span style="color:green;">HP {{boss.hp}}</span></b></p>
     <!-- <div style="display: flex; justify-content: center;">

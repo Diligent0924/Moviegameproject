@@ -1,7 +1,7 @@
 <template>
   <div>
     <p style="border-bottom:20px" :class="{'unique-card-color' : isUnique }" ><b>{{ card.name }}</b></p>
-    <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 80%; height: 80%;">
+    <img :src="card.posterpath" alt="#" @click="pickCard" style="width: 300px; height: 400px;">
     <hr>
     <p v-if="!isSepll" class="text-danger"><b> AD : {{ card.attackdamage }} </b></p>
     <p class="text-success"><b>{{ hp }}</b></p>
