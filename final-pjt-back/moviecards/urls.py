@@ -9,7 +9,6 @@ urlpatterns = [
     path('normalcard_list/', views.normalcard_list),
     path('uniquecard_list/', views.uniquecard_list),
     path('bosscard_list/', views.bosscard_list),
-    path('skill_list/', views.skill_list),
     
     # 개별적인 Card들을 확인
     path('<int:card_pk>/', views.card_detail),

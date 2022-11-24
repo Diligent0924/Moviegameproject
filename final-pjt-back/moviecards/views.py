@@ -34,6 +34,8 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
         serializer = NormalCardSerializer(normal_card, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         # 여기서 기존 DB 전체 삭제
         data = Card.objects.raw('select * from moviecards_card where movietype = "normal"')
         for i in data:
@@ -61,6 +63,8 @@ def uniquecard_list(request):
         serializer = UniqueCardSerializer(uniquecard, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         # Unique Card를 삭제하고 다시 더하는 공간
         data = Card.objects.raw('select * from moviecards_card where movietype = "unique"')
         for i in data:
@@ -86,6 +90,10 @@ def bosscard_list(request): # 보스 카드를 더한다.
         print(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
+        print(request.user)
+        print(request.user.is_superuser)
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         # 중복방지 필요
         bosscard = BossCard.objects.raw('select * from moviecards_bosscard')
         if len(bosscard) >= 7: # BossCard를 보내줘야지!
@@ -102,13 +110,6 @@ def bosscard_list(request): # 보스 카드를 더한다.
                 skillcard = BossSkill(card=bosscard, skilltype=boss_info[i]['skill_type'][j], skillrange=boss_info[i]['skill_range'][j], skillcomment=boss_info[i]['skill_comment'][j])
                 skillcard.save()
         return Response(status=status.HTTP_201_CREATED)
-
-# 스킬 카드들의 집합소
-@api_view(['GET'])
-def skill_list(request):
-    # bosscard = get_list_or_404(Skill)
-    # serializer = SkillSerializer(bosscard, many=True)
-    return Response()
 
 # 카드들을 확인할 수 있는 곳
 @api_view(['GET']) 
