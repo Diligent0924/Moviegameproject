@@ -4,7 +4,7 @@
       <b-row class="text-center">
         <b-col cols="6"><b>{{battleLog}}</b></b-col>
         <b-col><b-form-rating v-model="turnCounter" color="indigo" class="mb-2" readonly></b-form-rating></b-col>
-        <b-col>남은 카드 수 : {{leftCardNum}}</b-col>
+        <b-col>남은 카드 수 : {{leftCardNum}}</b-col> 
         <b-col v-if="isPlayerTurn">{{playerTurn}}</b-col>
         <b-col v-if="!isPlayerTurn">{{bossTurn}}</b-col>
       </b-row>
