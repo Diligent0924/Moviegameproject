@@ -25,6 +25,9 @@ export default {
         this.$router.push({ name: 'login' })
       }
       this.$store.dispatch('canGoChange')
+    },
+    createDeckList() {
+      this.$store.dispatch('createDeckList')
     }
   },
   computed: {
@@ -37,6 +40,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getInven')
+    this.createDeckList()
   }
 }
 </script>

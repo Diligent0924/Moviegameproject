@@ -41,18 +41,12 @@ export default {
     countUpdate (newCount) {
       this.count = newCount
     },
-    createDeckList() {
-      this.$store.dispatch('createDeckList')
-    }
   },
   computed: {
     cardNum() {
       return this.$store.getters.cardNum
     }
-  },
-  created() {
-    this.createDeckList()
-  },
+  }
 }
 </script>
 
