@@ -20,7 +20,7 @@ from inven.models import Moviecount
 @permission_classes([IsAuthenticatedOrReadOnly])
 def scoreboard_list(request):
     if request.method == 'GET': # 전체데이터확인
-        articles = Board.objects.raw('select * from scoreboard_board order by id')
+        articles = Board.objects.raw('select * from scoreboard_board order by stage DESC')
         serializer = BoardListSerializer(articles, many=True)
         return Response(serializer.data)
 

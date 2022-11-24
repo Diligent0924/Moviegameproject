@@ -5,7 +5,7 @@
     </h1>
     <hr>
     <b-list-group>
-    <ScoreBoardItem v-for="(score, index) in scores" :key="index" :score="score" />
+      <ScoreBoardItem v-for="(score, index) in scores" :key="index" :score="score" />
     </b-list-group>
   </div>
 </template>
