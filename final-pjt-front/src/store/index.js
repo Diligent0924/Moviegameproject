@@ -167,6 +167,7 @@ export default new Vuex.Store({
       })
     },
     createDeckList(context) {
+      // 백서버에서 관리자일 경우에만 실행하게 함
       axios({
         method: 'post',
         url: `${API_URL}/moviecards/normalcard_list/`,
