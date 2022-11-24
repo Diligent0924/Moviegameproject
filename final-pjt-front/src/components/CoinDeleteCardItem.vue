@@ -1,8 +1,10 @@
 <template>
   <div @click="deleteCard">
-    <p>{{ card.name }}</p>
+    <p v-if="IsSkill" class="text-warning">{{ card.name }}</p>
+    <p v-else>{{ card.name }}</p>
     <img :src="card.posterpath" alt="#" style="width: 150px; height: 200px;">
-    <b><p><span>공격력 : {{ card.attackdamage }}</span> / <span>생명력 : {{ card.hp }}</span></p></b>
+    <p v-if="IsSkill" class="text-center text-warning fw-bold">스킬 카드</p>
+    <p v-else class="fw-bold"><span class="text-danger">AD : {{ card.attackdamage }}</span> &nbsp;&nbsp; <span class="text-success">HP : {{ card.hp }}</span></p>
   </div>
 </template>
 
@@ -17,6 +19,9 @@ export default {
   computed: {
     cardNum() {
       return this.$store.state.userCards.length
+    },
+    IsSkill(){
+      return this.card.hp === 0 ? true : false 
     }
   },
   methods: {
@@ -32,7 +37,7 @@ export default {
         alert('이미 4번의 기회를 모두 사용하셨습니다.')
       }
     }
-  }
+  },
 }
 </script>
 
