@@ -67,3 +67,4 @@ class plusSerializer(serializers.Serializer):
     skilltype = serializers.CharField(max_length=100)
     skillrange = serializers.IntegerField() # 회복이든 뭐든~
     skillcomment = serializers.CharField(max_length=100, default = "이 카드는 평범한 카드입니다...")
+    skilldescription = serializers.CharField(max_length=100, default = "이 카드는 평범한 카드입니다...")
