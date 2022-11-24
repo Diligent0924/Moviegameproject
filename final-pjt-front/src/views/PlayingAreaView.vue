@@ -103,10 +103,10 @@ export default {
         const index = this.copiedDeck.indexOf(drawCard)
         this.copiedDeck.splice(index, 1)
         
-        if (this.startDeck.length < 8) {
+        if (this.startDeck.length < 6) {
           this.startDeck.push(drawCard)
         } else {
-          alert('손패는 최대 8장 입니다!')
+          alert('손패는 최대 6장 입니다!')
         }
       }
     },
@@ -298,7 +298,7 @@ export default {
                 // 하수인을 선택합니다. 해당 하수인의 공격력이 +40 증가합니다. 이번턴에 사망합니다.
                 this.setTarget(card)
               }
-            } else if (this.inFields.length < 7) {
+            } else if (this.inFields.length < 6) {
               // 토템
               if (card.skillcomment === '대중들은 개,돼지 입니다. 적당히 짖어대다 알아서 조용해질 겁니다.') {
                 // 자신을 제외한 모든 유닛의 체력이 10이 됩니다.
@@ -332,14 +332,14 @@ export default {
                 this.realPlay(card)
               }
             } else {
-              alert('필드의 최대 장수는 7장 입니다.')
+              alert('필드의 최대 장수는 6장 입니다.')
             }
           }
-        } else if (this.inFields.length < 7) {
+        } else if (this.inFields.length < 6) {
           // 일반 카드
           this.realPlay(card)
         } else{
-          alert('필드의 최대 장수는 7장 입니다.')
+          alert('필드의 최대 장수는 6장 입니다.')
         }
       } else {
         alert('이미 두 번의 행동을 수행했습니다.\n필드의 유닛을 클릭해 공격하거나 턴 종료 버튼을 눌러주세요.')
