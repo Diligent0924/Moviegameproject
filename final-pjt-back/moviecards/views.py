@@ -90,7 +90,7 @@ def bosscard_list(request): # 보스 카드를 더한다.
             card = Card(movieid=boss_info[i]["id"],movietype='boss')
             card.save()
             # BossCard Table에 추가
-            bosscard = BossCard(card = card, name=boss_info[i]['name'], posterpath = boss_info[i]['poster_path'], attackdamage = boss_info[i]["AD"], hp = boss_info[i]["HP"])
+            bosscard = BossCard(card = card, name=boss_info[i]['name'], posterpath = boss_info[i]['poster_path'], attackdamage = boss_info[i]["AD"]+15, hp = boss_info[i]["HP"]+80)
             bosscard.save()
             # SkillCard Table에 추가
             for j in range(len(boss_info[i]['skill_type'])):
