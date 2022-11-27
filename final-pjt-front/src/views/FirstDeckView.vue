@@ -4,6 +4,7 @@
       탐험을 위한 최초의 덱을 구성하세요! 
       <b-button :class="{disabled : cardNum < 10}" block variant="outline-danger" @click="goToDengeon">탐험 시작!</b-button>
     </h2>
+    <h3 class="text-cenrer text-danger">이 카드게임은 가챠게임으로 오늘 하루 기분이 좋고 싶으신 분은 뒤로가기를 눌러주세요.</h3>
     <hr>
     <b-container class="bv-example-row">
       <b-row class="text-center" style="height:700px;">

@@ -1,12 +1,17 @@
 <template>
   <div class="mt-3">
     <b-container class="bv-example-row">
-      <b-row>
+      <b-row class="mb-5">
         <b-col cols="2">
           <DeadCards style="float: right; margin-right: 50px;" :deadCards="deadCards" />
         </b-col>
         <b-col cols="8">
-          <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
+          <b-row>
+            <BossArea :boss="boss" :bossLevel="bossLevel" :inAttack="inAttack" @attackTo="attackTo" />
+          </b-row>
+          <b-row class="text-center ps-5" style="margin-left:20%">
+              <BossConsoleChat :bossbattleLog="bossbattleLog" class="ms-5"/>
+          </b-row>
         </b-col>
         <b-col cols="2">
         </b-col>
@@ -45,6 +50,7 @@ import PlayerArea from '@/components/PlayerArea'
 import BossArea from '@/components/BossArea'
 import _ from 'lodash'
 import InField from '@/components/InField'
+import BossConsoleChat from '@/components/BossConsoleChat.vue'
 
 export default {
   name: 'PlayingAreaView',
@@ -54,7 +60,8 @@ export default {
     PlayerArea,
     BossArea,
     InField,
-  },
+    BossConsoleChat
+},
   data() {
     return {
       copiedDeck: null,
@@ -64,6 +71,7 @@ export default {
       inFields: [],
       playCardCount: 2,
       battleLog: '전투 시작! 필드에 내려놓을 카드를 클릭해주세요',
+      bossbattleLog : '',
       turns: 1,
       boss: null,
       bossLevel: 0,
@@ -470,9 +478,11 @@ export default {
         if (targets === 0 || atkNum === targets) {
           this.playerHp -= this.boss.attackdamage
           this.battleLog = `${this.boss.name}가 플레이어에게 ${this.boss.attackdamage}의 피해를 입혔다.`
+          this.bossbattleLog = `플레이어에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         } else {
           this.inFields[atkNum].hp -= this.boss.attackdamage
           this.battleLog = `${this.boss.name}가 ${this.inFields[atkNum].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
+          this.bossbattleLog = `${this.inFields[atkNum].name}에게 ${this.boss.attackdamage}의 피해를 입혔다.`
         }
         setTimeout(() => {
           this.battleLog = '손패를 클릭해 내려놓거나, 필드의 유닛을 클릭해 공격하세요'
@@ -483,6 +493,7 @@ export default {
         const skillType = this.boss.bossskill_set[whichSkill]['skilltype']
         const skillRange = this.boss.bossskill_set[whichSkill]['skillrange']
         this.battleLog = `${skillMessage}`
+        this.bossbattleLog = `${skillMessage}`
 
         if (skillType === 'heal') {
           this.boss.hp += skillRange
