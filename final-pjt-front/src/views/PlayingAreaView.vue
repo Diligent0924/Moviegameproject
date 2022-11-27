@@ -22,9 +22,9 @@
 
       <b-row class="my-3">
         <b-col>
-          <b-button :class="{disabled : !isPlayerTurn}" block variant="danger" @click="endTurn">턴 종료</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <b-button :class="{disabled : !isPlayerTurn}" block variant="primary" @click="endTurn">턴 종료</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
           <b-button :class="{disabled : !inAttack && !onTarget}" block variant="warning" @click="cancelAttack">취소</b-button>&nbsp;&nbsp;&nbsp;&nbsp;
-          <b-button block variant="warning" @click="lose">항복</b-button>
+          <b-button block variant="danger" @click="lose">항복</b-button>
         </b-col>
       </b-row>
 
