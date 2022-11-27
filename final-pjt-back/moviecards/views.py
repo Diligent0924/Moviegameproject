@@ -27,8 +27,6 @@ def normalcard_list(request): # 평범한 카드 리스트를 확인한다.
         serializer = NormalCardSerializer(normal_card, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        if not request.user.is_superuser:
-            return Response(status=status.HTTP_403_FORBIDDEN)
         # 여기서 기존 DB 전체 삭제
         data = Card.objects.raw('select * from moviecards_card where movietype = "normal"')
         for i in data:
@@ -56,8 +54,6 @@ def uniquecard_list(request):
         serializer = UniqueCardSerializer(uniquecard, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        if not request.user.is_superuser:
-            return Response(status=status.HTTP_403_FORBIDDEN)
         # Unique Card를 삭제하고 다시 더하는 공간
         data = Card.objects.raw('select * from moviecards_card where movietype = "unique"')
         for i in data:
