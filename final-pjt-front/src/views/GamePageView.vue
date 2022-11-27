@@ -7,6 +7,9 @@
 <script>
 export default {
   name: 'GamePageView',
+  created() {
+    this.$store.dispatch('createDeckList')
+  }
 }
 </script>
 

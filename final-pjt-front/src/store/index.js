@@ -144,6 +144,7 @@ export default new Vuex.Store({
       })
         .then(res => {
           context.commit('SAVE_TOKEN', {'token': res.data.key, 'username': username })
+          context.dispatch('createDeckList')
         })
         .catch(err => {
           console.log(err)
@@ -163,6 +164,7 @@ export default new Vuex.Store({
       })
         .then(res => {
           context.commit('SAVE_TOKEN', {'token': res.data.key, 'username': username })
+          context.dispatch('createDeckList')
         })
         .catch(err => console.log(err))
     },
@@ -191,7 +193,10 @@ export default new Vuex.Store({
           Authorization: `Token ${context.state.token}`
         }
       })
-        .then(res => { console.log(res) })
+        .then(res => { 
+          console.log(res); 
+          console.log('일반카드 리스트 생성 완료'); 
+        })
         .catch(err => { console.log(err) })
 
       axios({
@@ -203,9 +208,9 @@ export default new Vuex.Store({
       })
         .then(res => {
           console.log(res)
+          console.log('보스카드 리스트 생성 완료');
           context.commit('MAKE_BOSSCARD', res.data)
         })
-        
         .catch(err => { console.log(err) })
 
       axios({
@@ -216,6 +221,7 @@ export default new Vuex.Store({
         }
       })
         .then(res => {
+          console.log('특수카드 리스트 생성 완료');
           console.log(res)
         })
         .catch(err => { console.log(err) })
