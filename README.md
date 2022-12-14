@@ -42,7 +42,7 @@
 
 ## 데이터베이스 모델링 (ERD)
 
-![ERD](https://lab.ssafy.com/sdc00035/final-pjt/-/raw/main/ssafy-pjt-pjt.png)
+![ERD](https://github.com/Diligent0924/Moviegameproject/blob/main/erd.png?raw=true)
 
 ## 영화 추천 알고리즘에 대한 기술적 설명
 
